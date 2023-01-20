@@ -1,0 +1,16 @@
+//Task 15. Put it all together
+
+Ok, when we say "put it all together" we really mean "put the placement checking
+together with the rest of the program."
+
+Go make BattleShipBoard's tryAddShip use the placementChecker.
+Also update the default placementChecker in BattleShipBoard to use the
+two checkers combined.
+
+The only hint I'm going to give you is "dont forget about 'this'" (which is
+the same as C++'s 'this').
+
+Once you have done this, written test cases (to 100% coverage), and updated any documentation,
+you are done with task 15!
+
+Git commit and git push :)

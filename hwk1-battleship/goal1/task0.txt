@@ -1,0 +1,76 @@
+
+Goal 1: Minimal end to end system
+---------------------------------
+//Task 0. Project Setup
+  You should already have your development environment setup from the previous tutorial.
+  We need to make a new gitlab project and create the build.gradle.
+  Go to Duke's gitlab, create a new project named
+    ece651-sp20-YOURNETID-battleship
+  [replace YOURNETID with your netid]
+  Now clone that project to your computer.
+  cd into that directory (cd ece651-sp20-YOURNETID-battleship)
+  and do
+  gradle init.  Choose application, Java, Groovy, and JUNit Jupiter.  Make the projectname "battelship"
+  and the source package edu.duke.YOURNETID.battleship
+  [again, replace YOURNETID with your netid]
+
+This is what my interaction with gradle init looked like:
+
+Select type of project to generate:
+  1: basic
+  2: application
+  3: library
+  4: Gradle plugin
+Enter selection (default: basic) [1..4] 2
+
+Select implementation language:
+  1: C++
+  2: Groovy
+  3: Java
+  4: Kotlin
+  5: Swift
+Enter selection (default: Java) [1..5] 3
+
+Select build script DSL:
+  1: Groovy
+  2: Kotlin
+Enter selection (default: Groovy) [1..2] 1
+
+Select test framework:
+  1: JUnit 4
+  2: TestNG
+  3: Spock
+  4: JUnit Jupiter
+Enter selection (default: JUnit 4) [1..4] 4
+Project name (default: src): battleship
+Source package (default: battleship): edu.duke.adh39.battleship
+
+
+Now, edit build.gradle
+(1) in "plugins" put
+
+id 'com.bmuschko.clover' version '2.2.3'
+
+(2) in "dependencies" put
+
+clover 'org.openclover:clover:4.3.1'
+
+(3) at the top level (outside of any other block put)
+test {
+  testLogging {
+     showStandardStreams = true
+     exceptionFormat = 'full'
+  }
+}
+
+
+
+Before you proceed, run
+
+./gradlew  dependencies
+
+We aren't so much interested in the output, but it will make sure your build.gradle file
+is valid, and check the dependency structure.  This mostly will help you identify any problems
+before you proceed.
+
+
