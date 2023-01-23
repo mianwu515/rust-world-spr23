@@ -203,14 +203,14 @@ Lets instead have gradle create a distributable version of our program:
 
 This will make
 
-build/install/battleship
+app/build/install/app
 
 which has bin (containing a Unix script to run the program, and a Windows .bat file)
 and lib (containing a JAR of our classes and all the libraries we depend on).
 
 Now we can run
 
-./build/install/battleship/bin/battleship
+app/build/install/app/bin/app
 
 and it will run our program outside of gradle (just all by itself).
 

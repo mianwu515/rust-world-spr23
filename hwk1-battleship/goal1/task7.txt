@@ -65,7 +65,7 @@ We'll also write:
   public T whatIsAt(Coordinate where) {
     for (Ship<T> s: myShips) {
       if (s.occupiesCoordinates(where)){
-        return s.displayInfoAt(where);
+        return s.getDisplayInfoAt(where);
       }
     }
     return null;

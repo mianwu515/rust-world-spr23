@@ -3,7 +3,7 @@
 Now lets write the simplest BattleShipBoard class we can write.  Hit C-x C-f to open a new file and
 specify:
 
-  appsrc/main/java/edu/duke/YOURNETID/battleship/BattleShipBoard.java
+  app/src/main/java/edu/duke/YOURNETID/battleship/BattleShipBoard.java
 
 Note you should be able to TAB complete most of that
 
