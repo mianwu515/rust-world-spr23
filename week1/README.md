@@ -8,7 +8,7 @@
                 You chose: rock
                 Computer chose: scissors
                 Result: You win!
-
+![rock-paper-scissors-game-rules](https://andygrunwald.com/images/posts/playing-rock-paper-scissors-with-500-people/rock-paper-scissors-game-rules.png)
 ## References
 
 * [rust-cli-example](https://github.com/nogibjj/hello-rust)
