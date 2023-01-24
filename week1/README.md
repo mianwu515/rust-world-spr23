@@ -3,7 +3,7 @@
 ## Usage
 - Run `cargo run -- play --choice "[player choice]"` to play against computer
     - possible choices are `"rock"`, `"paper"` and `"scissors"`.
-    - e.g. You run `cargo run -- play --choice "rock"`
+    - e.g. You can run `cargo run -- play --choice "rock"`
            Output:
                 You chose: rock
                 Computer chose: scissors
