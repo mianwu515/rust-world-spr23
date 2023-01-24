@@ -18,7 +18,7 @@ Don't forget to document everything as you go.
 
 One tricky thing to make sure you handled correctly:
     Placement p1 = new Placement(c1, 'v');
-    Placement p2 = new Placement(c2, 'V');
+    Placement p2 = new Placement(c1, 'V');
     assertEquals(p1, p2);
 This test should pass since we said that we were handling everything
 with case insensitivity.  Hopefully you handled case insensitivy by
