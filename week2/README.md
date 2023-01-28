@@ -1,12 +1,17 @@
 # A tool to sync between upstream, forked origin and local.
 
+# Why is it useful?
+
+- It's convenient that Github has a "Sync fork/Update stream" option, while gitlab doesn't. So, you might need something to help you make your remote origin in sync with the upstream.
+
+![upstream-origin-local](https://premaseem.files.wordpress.com/2016/01/githubfork.png?w=640)
+
+#
 ## Precondition
 
 - You have
     - a remote origin that was forked from an upstream source
     - a local repo that was cloned from your remote origin.
-
-![upstream-origin-local](https://premaseem.files.wordpress.com/2016/01/githubfork.png?w=640)
 
 ## Usage
 - Now suppose your local repo path is `PATH`, your remote branch is `main` (in gitlab, it's `master`), and the upstream path is `UPSTREAM`
