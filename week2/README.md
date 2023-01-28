@@ -29,3 +29,5 @@ cargo run -- syncfork --path "~/rust-world-spr23" -- "git@github.com:mianwu515/r
 ## References
 - [rust_cmd_lib](https://github.com/rust-shell-script/rust_cmd_lib)
 - [rust-cli-example](https://github.com/nogibjj/hello-rust)
+- [macro cmd_lib::run_cmd](https://docs.rs/cmd_lib/0.7.4/cmd_lib/macro.run_cmd.html)
+- [cmd_lib](https://crates.io/crates/cmd_lib)
