@@ -1,0 +1,13 @@
+/workspaces/rust-world-spr23/week2/target/release/deps/cmd_lib-6c177b055aa872c6.rmeta: /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/lib.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/builtins.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/child.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/io.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/logger.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/process.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/thread_local.rs
+
+/workspaces/rust-world-spr23/week2/target/release/deps/libcmd_lib-6c177b055aa872c6.rlib: /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/lib.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/builtins.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/child.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/io.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/logger.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/process.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/thread_local.rs
+
+/workspaces/rust-world-spr23/week2/target/release/deps/cmd_lib-6c177b055aa872c6.d: /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/lib.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/builtins.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/child.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/io.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/logger.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/process.rs /usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/thread_local.rs
+
+/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/lib.rs:
+/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/builtins.rs:
+/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/child.rs:
+/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/io.rs:
+/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/logger.rs:
+/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/process.rs:
+/usr/local/cargo/registry/src/github.com-1ecc6299db9ec823/cmd_lib-1.3.0/src/thread_local.rs:
