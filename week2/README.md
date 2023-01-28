@@ -20,9 +20,9 @@
 cargo run -- syncfork --path PATH -- UPSTREAM main
 ```
 - For example, your are in your local directory "~/rust-world-spr23", (and you have added your remote origin "git@github.com:[your github id here]/rust-world-spr23"), and the upstream is "https://github.com/mianwu515/rust-world-spr23.git" (HTTPS url version, or you can use SSH url version here, which might be "git@github.com:mianwu515/rust-world-spr23.git")
-_ Then the cmd would be
+- Then the cmd would be
 ```
 cargo run -- syncfork --path "~/rust-world-spr23" -- "git@github.com:mianwu515/rust-world-spr23.git" main
 ```
-_ Done! Your local and remote origin have been updated with the upstream!
+- Done! Your local and remote origin have been updated with the upstream!
 
