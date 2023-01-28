@@ -4,7 +4,7 @@
 
 - Build weekly Rust projects into this Repo
 
-![Rust](https://www.rust-lang.org/static/images/rust-social-wide.jpg)
+![Rust](https://blog.logrocket.com/wp-content/uploads/2020/09/best-rust-http-client.png)
 
 ## Introduction
 - _Cargo.toml_ file and _./src/_ are created with command `cargo init --name "[project name]"`
