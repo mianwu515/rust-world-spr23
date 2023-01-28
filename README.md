@@ -18,3 +18,6 @@
 - `cd` into each project 
     * Run `make format` to format code
     * Run `cargo run -- --help`
+
+* [rust-cli-example](https://github.com/nogibjj/hello-rust)
+* [rust-new-project-template](https://github.com/noahgift/rust-new-project-template)

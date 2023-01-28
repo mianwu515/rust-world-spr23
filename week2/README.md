@@ -26,3 +26,6 @@ cargo run -- syncfork --path "~/rust-world-spr23" -- "git@github.com:mianwu515/r
 ```
 - Done! Your local and remote origin have been updated with the upstream!
 
+## References
+- [rust_cmd_lib](https://github.com/rust-shell-script/rust_cmd_lib)
+- [rust-cli-example](https://github.com/nogibjj/hello-rust)
