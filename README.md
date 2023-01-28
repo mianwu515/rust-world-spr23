@@ -14,10 +14,10 @@
 ## Usage and reproduce
 - Open Codespaces
     - set up your own CPU/GPU choice
-    - Install Copilot
-- `cd` into each project 
-    * Run `make format` to format code
+    - Run ```curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh``` to install [Rust](https://rustup.rs/) if you haven't installed one
+- `cd` into each project
     * Run `cargo run -- --help`
+    * Edit and run `make format` to format code
 
 * [rust-cli-example](https://github.com/nogibjj/hello-rust)
 * [rust-new-project-template](https://github.com/noahgift/rust-new-project-template)
