@@ -2,8 +2,9 @@
 
 - Start from a [rust-new-project-template](https://github.com/noahgift/rust-new-project-template) and a [rust-cli-example](https://github.com/nogibjj/hello-rust)
 
-- Will build weekly Rust projects into this Repo
+- Build weekly Rust projects into this Repo
 
+![Rust](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Rust_programming_language_black_logo.svg/800px-Rust_programming_language_black_logo.svg.png)
 
 ## Introduction
 - _Cargo.toml_ file and _./src/_ are created with command `cargo init --name "[project name]"`
