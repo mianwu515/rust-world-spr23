@@ -63,7 +63,7 @@ Instead, lets make the constructor
     this.theBoard = theBoard;
     this.view = new BoardTextView(theBoard);
     this.inputReader = new BufferedReader(inputSource);
-    this.out = System.out;
+    this.out = out;
   }
 
 Now we can write
