@@ -9,7 +9,7 @@ cargo lambda new my-first-lambda-function
 
 # rustup target add x86_64-unknown-linux-musl (run if you have never installed it)
 cargo build --release --target x86_64-unknown-linux-musl
-target/x86_64-unknown-linux-musl/release/myfirstlambdafunction ./bootstrap
+cp target/x86_64-unknown-linux-musl/release/myfirstlambdafunction ./bootstrap
 zip lambda.zip bootstrap
 # I then use the AWS Lambda console to submit the zip file
 ```
