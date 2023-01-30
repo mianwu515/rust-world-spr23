@@ -33,5 +33,6 @@ Output
 ## References
 * [Cargo-Lambda](https://crates.io/crates/cargo-lambda)
 * [install-cargo-lambda](https://pypi.org/project/cargo-lambda/0.10.0rc1/)
+* [aws-sdk-for-rust-lambda](https://docs.aws.amazon.com/sdk-for-rust/latest/dg/lambda.html)
 * [aws-lambda-rust-runtime](https://github.com/awslabs/aws-lambda-rust-runtime#aws-cli)
 * [marco-polo-lambda](https://github.com/nogibjj/rust-mlops-template/tree/main/marco-polo-lambda)
