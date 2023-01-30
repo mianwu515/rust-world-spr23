@@ -4,7 +4,7 @@
 
 - It's convenient that Github has a "Sync fork/Update stream" option, but some (e.g. gitlab) doesn't. So, you might need something to help you make your remote origin in sync with the upstream.
 
-![upstream-origin-local](https://premaseem.files.wordpress.com/2016/01/githubfork.png?w=640)
+![upstream-origin-local](githubfork.webp "github fork")
 
 #
 ## Precondition
