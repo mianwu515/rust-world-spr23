@@ -14,7 +14,7 @@
     - a local repo that was cloned from your remote origin.
 
 ## Usage
-- Now suppose your local repo path is `PATH`, your remote branch is `main` (in gitlab, it's `master`), and the upstream path is `UPSTREAM`
+- Now suppose your local repo path is `PATH`, your remote branch is `main` (or `master`), and the upstream path is `UPSTREAM`
 - You could then run this program with cmd right in current directory:
 ```{bash}
 cargo run -- syncfork --path PATH -- UPSTREAM main
