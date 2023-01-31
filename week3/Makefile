@@ -16,7 +16,7 @@ test:
 	cargo test --quiet
 
 run:
-	cargo run
+	cargo run -- jsonformatter --obj
 
 run-default:
 	cargo run -- jsonformatter --obj "{\"key\": 2}" "a.txt"

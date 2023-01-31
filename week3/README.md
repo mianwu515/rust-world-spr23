@@ -21,7 +21,9 @@ cargo run -- jsonformatter --obj "{\"key\": 2}" "a.txt"
 Or run your own json formatter with cmds
 
 ```bash
-cargo run -- jsonformatter --obj [unformatted json string] [output file path]
+make run [unformatted json string] [output file path]
+
+make release
 ```
 
 
