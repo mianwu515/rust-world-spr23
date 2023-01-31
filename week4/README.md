@@ -1,4 +1,6 @@
+# Rust images
 
+![rust-image-fractal](fractal.png "image-rs")
 
 ## How 
 
@@ -23,3 +25,7 @@ make release
 ```bash
 make run
 ```
+
+
+## References
+* [image-rs](https://github.com/image-rs/image)
