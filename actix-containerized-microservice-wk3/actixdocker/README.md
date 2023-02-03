@@ -21,7 +21,7 @@ make rundocker # launch the container from the image
 2. [Generate an SSH public key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and configure it to your github account (if you want to later develop on your cloud env using push/pull stuffs)
 3. Clone the repo and `make format` and `make lint` to make sure everything works fine.
 4. Go and create an ECR (Elastic Container Registry) 
-![image-ECR](/home/ec2-user/environment/rust-world-spr23/actix-containerized-microservice-wk3/actixdocker/images/ECR.png ECR-image)
+![image-ECR](images/ECR.png ECR-image)
 5. Run the 4 commands in your Cloud9 env to create a docker image for your ECR, commands provided under the "View push commands" after selecting your ECR entry.
     ```bash
     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin [aws-account-id].dkr.ecr.us-east-1.amazonaws.com # login
@@ -30,9 +30,9 @@ make rundocker # launch the container from the image
     docker push [aws-account-id].dkr.ecr.us-east-1.amazonaws.com/actix:latest # push the image to your resporitory
     ```
 6. Go and create an App Runner service by selecting the created container image url
-![image-app-runner](/home/ec2-user/environment/rust-world-spr23/actix-containerized-microservice-wk3/actixdocker/images/apprunner.png)
-![image-app-runner1](/home/ec2-user/environment/rust-world-spr23/actix-containerized-microservice-wk3/actixdocker/images/apprunner1.png)
-![image-app-runner](/home/ec2-user/environment/rust-world-spr23/actix-containerized-microservice-wk3/actixdocker/images/apprunner2.png)
+![image-app-runner](images/apprunner1.png)
+![image-app-runner1](images/apprunner.png)
+![image-app-runner](images/apprunner2.png)
 7. Wait for completion of the deployment.
 8. Open up the app url! (mine is https://wnqfmhu9xj.us-east-1.awsapprunner.com/rock)
     
