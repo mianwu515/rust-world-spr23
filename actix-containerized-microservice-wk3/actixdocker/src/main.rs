@@ -20,7 +20,7 @@ async fn index() -> impl Responder {
 #[get("/rock")]
 async fn rock() -> impl Responder {
     let result = play("rock".to_string());
-    println!("Result: {}", result);
+    println!("Result: {result}");
     HttpResponse::Ok().body(result)
 }
 
@@ -28,7 +28,7 @@ async fn rock() -> impl Responder {
 #[get("/paper")]
 async fn paper() -> impl Responder {
     let result = play("paper".to_string());
-    println!("Result: {}", result);
+    println!("Result: {result}");
     HttpResponse::Ok().body(result)
 }
 
@@ -36,7 +36,7 @@ async fn paper() -> impl Responder {
 #[get("/scissors")]
 async fn scissor() -> impl Responder {
     let result = play("scissors".to_string());
-    println!("Result: {}", result);
+    println!("Result: {result}");
     HttpResponse::Ok().body(result)
 }
 
@@ -50,7 +50,7 @@ async fn version() -> impl Responder {
 // F. /{name} that returns a hello {name}
 #[get("/{name}")]
 async fn hello_name(name: web::Path<String>) -> impl Responder {
-    HttpResponse::Ok().body(format!("Hello {}!", name))
+    HttpResponse::Ok().body(format!("Hello {name}!"))
 }
 
 #[actix_web::main]
