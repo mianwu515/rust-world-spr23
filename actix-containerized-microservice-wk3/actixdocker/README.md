@@ -37,7 +37,7 @@ make rundocker # launch the container from the image
 8. Open up the app url! (mine is https://wnqfmhu9xj.us-east-1.awsapprunner.com/rock)
     
 ## Note
-The dev env is AWS Cloud9. If you directly run the codes from this Codespaces, it might not work. But it should work as long as you have your docker and rust env set up!
+The dev env is AWS Cloud9. If you directly run the codes from this Codespaces, it might not work. But it should work as long as you have your docker and rust env set up in your place!
 
 ## References
 * [containerized-actix-continuous-delivery-to-aws-apprunner](https://github.com/nogibjj/rust-mlops-template/blob/main/README.md#containerized-actix-continuous-delivery-to-aws-app-runner)
