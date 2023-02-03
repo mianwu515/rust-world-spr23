@@ -6,3 +6,6 @@
 * ML/AI model building -> visualization onto web microservice actix
 * deploy the forksync program to auto sync? [see automerge/autosurgeon](https://github.com/automerge/autosurgeon)
 * [image-rs](https://github.com/image-rs/image) -> make some fun picture -> microservice -> people input sth and output a pic? 
+
+### fun!
+* [emojis-in-rust](https://docs.rs/emojis/latest/emojis/)

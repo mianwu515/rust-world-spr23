@@ -22,3 +22,4 @@
 
 * [rust-cli-example](https://github.com/nogibjj/hello-rust)
 * [rust-new-project-template](https://github.com/noahgift/rust-new-project-template)
+* [rust-tutorial-spring2023](https://nogibjj.github.io/rust-tutorial/)
