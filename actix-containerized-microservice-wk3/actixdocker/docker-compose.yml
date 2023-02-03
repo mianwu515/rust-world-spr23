@@ -1,0 +1,20 @@
+# config file for docker-compose to run the app
+# this file is used by the docker-compose command
+# rust image is based on debian
+# the app's name is actixdocker
+# the app's version is 0.1.0
+# the app's port is 8080
+
+
+version: '3.7' # version of docker-compose file
+services:
+  app:
+    image: actixdocker:0.1.0 # image name
+    build: . # build the image from the Dockerfile in the current directory
+    ports:
+      - 8080:8080 # map the app's port to the host's port
+    volumes:
+      - .:/app # mount the current directory to the app's directory
+    environment:
+      - RUST_LOG=actix_web=info # set the environment variable
+    command: cargo run # run the app
