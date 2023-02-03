@@ -13,15 +13,11 @@ run:
 
 
 build:
-	docker-compose build rockpaperscissors
+	docker build -t rockpaperscissors .
 
-## docker build -t rockpaperscissors .
-
-## docker run -it --rm -p 8080:8080 rockpaperscissors
 
 rundocker:
-	docker-compose run --rm rockpaperscissors
+	docker run -it --rm -p 8080:8080 rockpaperscissors
 	
-
 
 all: format lint run
