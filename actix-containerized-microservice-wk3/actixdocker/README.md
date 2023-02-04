@@ -11,12 +11,14 @@ make format
 make lint
 make run
 ```
+After this, you should be able to launch your localhost web service! go to http://localhost:8080/rock
 * 2. -> to containerize it (make sure docker is properly configured and started)
 
 ```bash
 make build # build an image out of the Dockerfile
 make rundocker # launch the container from the image
 ```
+After this, you should also find http://localhost:8080/paper this work
 * 3. -> to deploy a Continuous Delivery of the web service using AWS ECR and App Runner
 
 1. Set up AWS Cloud9 Rust env with [rustup](https://rustup.rs/), git config global settings, etc.
