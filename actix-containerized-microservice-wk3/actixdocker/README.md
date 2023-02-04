@@ -39,8 +39,10 @@ After this, you should also find http://localhost:8080/paper this work
 ![image-app-runner](pictures/apprunner2.png)
 7. Wait for completion of the deployment.
 8. Open up the app url! 
-	- Mine is https://wnqfmhu9xj.us-east-1.awsapprunner.com/[rock/paper/scissors/hello/alice/..]
-	- For example, try this link out: https://wnqfmhu9xj.us-east-1.awsapprunner.com/rock
+	- Mine is https://wnqfmhu9xj.us-east-1.awsapprunner.com/rock
+	- try substitute "paper", "scissors", "hello", [you name] for 
+"rock"
+
 ## Note
 The dev env is AWS Cloud9. If you directly run the codes from this Codespaces, it might not work. But it should work as long as you have your docker and rust env set up in your place!
 
