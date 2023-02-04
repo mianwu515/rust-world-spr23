@@ -3,6 +3,8 @@
 # [Continuous Delivery of Rust Actix to ECR and AWS App Runner](https://nogibjj.github.io/rust-tutorial/chapter_3.html#continuous-delivery-of-rust-actix-to-ecr-and-aws-app-runner)
 
 ## How? -> 3 steps
+* 0. Start with a rust cli 
+[program](https://github.com/mianwu515/rust-world-spr23/tree/main/week1).  
 * 1. -> to make it locally deployed
 ```bash
 make format
@@ -34,12 +36,14 @@ make rundocker # launch the container from the image
 ![image-app-runner1](pictures/apprunner.png)
 ![image-app-runner](pictures/apprunner2.png)
 7. Wait for completion of the deployment.
-8. Open up the app url! (mine is https://wnqfmhu9xj.us-east-1.awsapprunner.com/rock)
-    
+8. Open up the app url! 
+	- Mine is https://wnqfmhu9xj.us-east-1.awsapprunner.com/[rock/paper/scissors/hello/alice/..]
+	- For example, try this link out: https://wnqfmhu9xj.us-east-1.awsapprunner.com/rock
 ## Note
 The dev env is AWS Cloud9. If you directly run the codes from this Codespaces, it might not work. But it should work as long as you have your docker and rust env set up in your place!
 
 ## References
+* [continuous-delivery-of-rust-actix-to-ECR-and-App-runner](https://nogibjj.github.io/rust-tutorial/chapter_3.html#continuous-delivery-of-rust-actix-to-ecr-and-aws-app-runner)
 * [containerized-actix-continuous-delivery-to-aws-apprunner](https://github.com/nogibjj/rust-mlops-template/blob/main/README.md#containerized-actix-continuous-delivery-to-aws-app-runner)
 * [webdocker-github-code-example](https://github.com/nogibjj/rust-mlops-template/tree/main/webdocker)
 * [install-docker-on-debian](https://www.fosslinux.com/49959/install-docker-on-debian.html)
