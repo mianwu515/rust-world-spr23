@@ -22,16 +22,18 @@ enum Commands {
     Syncfork {
         #[clap(short, long)]
         path: String,
+        #[clap(short, long)]
         upstream: String,
+        #[clap(short, long)]
         branch: String,
     },
 }
 
 fn main() {
     println!("Usage:");
-    println!("cargo run -- syncfork --path [your-local-project-path] -- [upstream-url] [your-remote-repo-branch]");
+    println!("cargo run -- syncfork --path [your-local-project-path] --upstream [upstream-url] --branch [your-remote-repo-branch]");
     println!("For example:");
-    println!("cargo run -- syncfork --path ~/rust-world-spr23 -- git@github.com:mianwu515/rust-world-spr23.git main");
+    println!("cargo run -- syncfork --path ~/rust-world-spr23 --upstream git@github.com:mianwu515/rust-world-spr23.git --branch main");
     let args = Cli::parse();
     match args.command {
         Some(Commands::Syncfork { path, upstream, branch }) => run_command(path, upstream, branch),
