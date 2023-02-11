@@ -23,7 +23,7 @@ After this, you should also find http://localhost:8080/paper this work
 2. [Generate an SSH public key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and configure it to your github account (if you want to later develop on your cloud env using push/pull stuffs)
 3. Clone the repo and `make format` and `make lint` to make sure everything works fine.
 4. Go and create an ECR (Elastic Container Registry) 
-![image-ECR](pictures/ECR.png ECR-image)
+![image-ECR](pictures/ECR.png)
 5. Run the 4 commands in your Cloud9 env to create a docker image for your ECR, commands provided under the "View push commands" after selecting your ECR entry.
     ```bash
     aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin [aws-account-id].dkr.ecr.us-east-1.amazonaws.com # login
