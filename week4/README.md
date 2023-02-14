@@ -14,7 +14,8 @@ make lint
 ```
 
 ```bash
-make run
+make run -- --x 800 --y 800 --output
+make run-default
 ```
 
 ```bash

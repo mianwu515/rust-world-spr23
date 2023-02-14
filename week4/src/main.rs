@@ -1,8 +1,8 @@
-// Create a CLI tool: random image with n randomly colored pixels, where n is the input.
+// Create a CLI tool: random image generator
 //
 // The tool should take the following arguments:
-// - width
-// - height
+// - x
+// - y
 // - output
 //
 // The tool should generate a random image with the given width and height and save it to the given output file.
@@ -12,8 +12,6 @@
 // The tool should use rand to generate the random pixels.
 //
 // The tool should use image to save the image.
-//
-// The tool should use the following code to generate the image:
 //
 use clap::Parser;
 use rand::Rng;
