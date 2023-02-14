@@ -7,13 +7,4 @@ edition = "2021"
 
 [dependencies]
 image = "0.24.5"
-clap = {version="4.0.32", features=["derive"]}
-rand = "0.8.5"
-num-complex = "0.4.3"
-num-traits = "0.2.14"
-num-integer = "0.1.44"
-lyon = "1.0.1"
-graphics = "0.0.0"
-piston = "0.53.2"
-piston2d-graphics = "0.43.0"
 num = "0.4.0"

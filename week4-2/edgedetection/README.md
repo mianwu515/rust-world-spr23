@@ -1,5 +1,8 @@
 # Rust images
 
+![rust-image-original]
+![rust-image-edge-detection](test.png "image-rs")
+
 ## How 
 
 ```bash
@@ -12,8 +15,7 @@ make lint
 ```
 
 ```bash
-make run -- --x 800 --y 800 --output
-make run-default
+make run
 ```
 
 ```bash
