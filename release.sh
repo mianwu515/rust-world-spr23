@@ -4,9 +4,8 @@
 
 for DIR in */; do
     DIRNAME=$(basename "$DIR")
-    echo "==> $DIRNAME <=="
-    if [[ "$DIRNAME" == "week*" ]]; then
-        (cd $DIR && cargo build --release)
-    fi
-    
+    (echo "==> $DIRNAME <==")
+    (cd $DIR && (cargo build --release || echo "Build failed."))
 done
+
+echo "Release complete."
