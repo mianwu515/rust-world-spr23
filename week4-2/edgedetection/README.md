@@ -1,4 +1,4 @@
-# Rust images
+# Edge detection - Rust Image
 
 ![rust-image-original](in.png "original")
 ![rust-image-edge-detection](output.png "output")
