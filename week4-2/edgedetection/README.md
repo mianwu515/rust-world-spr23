@@ -1,7 +1,7 @@
 # Rust images
 
-![rust-image-original]
-![rust-image-edge-detection](test.png "image-rs")
+![rust-image-original](in.png "original")
+![rust-image-edge-detection](output.png "output")
 
 ## How 
 
