@@ -1,7 +1,7 @@
 use rust_bert::pipelines::translation::{Language, TranslationModelBuilder};
 
 fn main() -> anyhow::Result<()> {
-let model = TranslationModelBuilder::new()
+    let model = TranslationModelBuilder::new()
         .with_source_languages(vec![Language::English])
         .with_target_languages(vec![Language::Spanish, Language::French, Language::Italian])
         .create_model()?;

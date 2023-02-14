@@ -31,7 +31,11 @@ fn main() {
     println!("cargo run -- syncfork --path ~/rust-world-spr23 --upstream git@github.com:mianwu515/rust-world-spr23.git --branchmain");
     let args = Cli::parse();
     match args.command {
-        Some(Commands::Syncfork { path, upstream, branch }) => run_command(path, upstream, branch),
+        Some(Commands::Syncfork {
+            path,
+            upstream,
+            branch,
+        }) => run_command(path, upstream, branch),
         None => println!("No command was used"),
     }
 }

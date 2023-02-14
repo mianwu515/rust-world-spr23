@@ -1,3 +1,9 @@
+install:
+	# Install if needed
+	#@echo "Updating rust toolchain"
+	#rustup update stable
+	#rustup default stable
+
 rust-version:
 	@echo "Rust command-line utility versions:"
 	rustc --version 			#rust compiler
@@ -7,18 +13,23 @@ rust-version:
 	clippy-driver --version		#rust linter
 
 format:
-	cargo fmt --quiet
+	@echo "Formatting all projects with cargo"
+	./format.sh
 
 lint:
-	cargo clippy --quiet
+	@echo "Linting all projects with cargo"
+	@rustup component add clippy 2> /dev/null
+	./lint.sh
 
 test:
-	cargo test --quiet
+	@echo "Testing all projects with cargo"
+	./test.sh
 
-run:
-	cargo run
+check-gpu-linux:
+	sudo lshw -C display
 
 release:
-	cargo build --release
-
-all: format lint test run
+	@echo "Releasing all projects with cargo"
+	./release.sh
+	
+all: format lint test

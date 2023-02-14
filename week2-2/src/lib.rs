@@ -15,7 +15,5 @@ pub fn play(choice: String) -> String {
         ("scissors", "scissors") => "Tie!",
         _ => "Invalid choice. Please enter rock, paper, or scissors.",
     };
-    return format!(
-        "You chose: {choice}, Computer chose: {computer_choice}, Result: {result}"
-    );
+    return format!("You chose: {choice}, Computer chose: {computer_choice}, Result: {result}");
 }
