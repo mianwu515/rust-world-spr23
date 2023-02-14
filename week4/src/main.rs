@@ -26,17 +26,17 @@ use rand::Rng;
 )]
 struct Cli {
     #[clap(short, long)]
-    width: u32,
+    x: u32,
     #[clap(short, long)]
-    height: u32,
+    y: u32,
     #[clap(short, long)]
     output: String,
 }
 
 fn main() {
     let args = Cli::parse();
-    let imgx = args.width;
-    let imgy = args.height;
+    let imgx = args.x;
+    let imgy = args.y;
     let output = args.output;
 
     // Create a new ImgBuf with width: imgx and height: imgy
@@ -44,10 +44,12 @@ fn main() {
 
     let mut rng = rand::thread_rng();
     // Iterate over the coordinates and pixels of the image
-    for (_x, _y, pixel) in imgbuf.enumerate_pixels_mut() {
-        let r = rng.gen_range(0..255) as u8;
-        let g = rng.gen_range(0..255) as u8;
-        let b = rng.gen_range(0..255) as u8;
+    for (x, y, pixel) in imgbuf.enumerate_pixels_mut() {
+        let f = rng.gen_range(0.0..1.0);
+        let r = (f * x as f32) as u8;
+        let g = ((1.0 - f) * (x + y) as f32) as u8;
+        let b = (f * y as f32) as u8;
+
         *pixel = image::Rgb([r, g, b]);
     }
 
