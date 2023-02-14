@@ -12,7 +12,7 @@ rust-version:
 	rustup --version			#rust toolchain manager
 	clippy-driver --version		#rust linter
 
-format:
+format-check:
 	@echo "Formatting all projects with cargo"
 	./format.sh
 
@@ -28,8 +28,8 @@ test:
 check-gpu-linux:
 	sudo lshw -C display
 
-release:
+build-release:
 	@echo "Releasing all projects with cargo"
 	./release.sh
-	
+
 all: format lint test
