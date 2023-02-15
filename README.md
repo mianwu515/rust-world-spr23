@@ -1,6 +1,7 @@
 # A Repo of Rust Exploring in Spring 2023
-
-- Start from a [rust-new-project-template](https://github.com/noahgift/rust-new-project-template) and a [rust-cli-example](https://github.com/nogibjj/hello-rust)
+[![Rustfmt](https://github.com/mianwu515/rust-world-spr23/actions/workflows/rustfmt.yml/badge.svg)](https://github.com/mianwu515/rust-world-spr23/actions/workflows/rustfmt.yml)
+[![Clippy](https://github.com/mianwu515/rust-world-spr23/actions/workflows/lint.yml/badge.svg)](hhttps://github.com/mianwu515/rust-world-spr23/actions/workflows/lint.yml)
+[![Build binary release](https://github.com/mianwu515/rust-world-spr23/actions/workflows/release.yml/badge.svg)](https://github.com/mianwu515/rust-world-spr23/actions/workflows/release.yml)
 
 - Build weekly Rust projects into this Repo
 
