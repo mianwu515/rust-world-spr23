@@ -1,6 +1,47 @@
 // ! Rust CLI Tool to interact with DynamoDB using the AWS SDK for Rust
 // `cargo run --bin myawsdynamodb`
 
+use clap::Parser;
+
+#[derive(Parser)]
+#[clap(
+    version = "1.0",
+    author = "Mian Wu",
+    about = "AWS DynamoDB CLI in Rust",
+    after_help = "Example: rust-s3-cli"
+)]
+
+struct Cli {
+    #[clap(subcommand)]
+    command: Option<Commands>,
+}
+
+#[derive(Parser)]
+enum Commands {
+    List {
+        #[clap(short, long)]
+        table: Option<String>,
+    },
+    Create {
+        #[clap(short, long)]
+        table: String,
+        #[clap(short, long)]
+        primarykey: String,
+    },
+    Upload {
+        #[clap(short, long)]
+        bucket: String,
+        #[clap(short, long)]
+        filepath: String,
+    },
+    Delete {
+        #[clap(short, long)]
+        table: String,
+        #[clap(short, long)]
+        key: Option<String>,
+    },
+}
+
 use aws_config::meta::region::RegionProviderChain;
 use aws_sdk_dynamodb::{Client, Error};
 
