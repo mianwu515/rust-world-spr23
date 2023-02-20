@@ -20,8 +20,20 @@ use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 use rust_bert::pipelines::translation::{Language, TranslationModelBuilder};
 
 // A.  / that turns a hello world
+async fn hello() -> impl Responder {
+    HttpResponse::Ok().body("Hello world!")
+}
 
-// B. /from/[lang1]/to/[lang2]/[contents] that returns the formatted json
+// B. /{obj} that parses the json object and returns it
+//   key: from
+//   key: to
+//   key: contents
+async fn parse_json(obj: web::Json<serde_json::Value>) -> impl Responder {
+    obj.from;
+    HttpResponse::Ok().json(obj.from);
+    HttpResponse::Ok().json(obj.to);
+    HttpResponse::Ok().json(obj.contents);
+}
 
 fn map_language(lang: String) -> Language {
     let lang = lang.to_lowercase();
@@ -33,7 +45,6 @@ fn map_language(lang: String) -> Language {
         _ => Language::English,
     }
 }
-
 
 // TODO: convert the following code to actix web
 fn main() -> anyhow::Result<()> {
