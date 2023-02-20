@@ -13,7 +13,7 @@ serde_json = "1.0"
 
 * Authenticate with the API: To access the Spotify Web API, you will need to authenticate with an access token. You can obtain an access token by following the steps in the Spotify Web API documentation.
 
-    - Go to the Spotify for Developers website (https://developer.spotify.com/).
+    - Go to the Spotify for Developers website (https://developer.spotify.com/dashboard/applications).
 
     - Click the "Log in" button at the top-right of the page and sign in with your Spotify account.
 

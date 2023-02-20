@@ -6,7 +6,8 @@
 // ! more complex than it needs to be.
 
 use actix_web::{web, App, HttpResponse, HttpServer, Responder};
-use serde::{Debug, Deserialize, Serialize};
+use serde::{Deserialize, Serialize};
+use base64::Engine;
 
 #[derive(Debug, Deserialize, Serialize)]
 struct AccessTokenResponse {
@@ -18,7 +19,7 @@ struct AccessTokenResponse {
 fn get_access_token(client_id: &str, client_secret: &str) ->   Result<String, Box<dyn std::error::Error>> {
     let client = reqwest::blocking::Client::new();
     let body = "grant_type=client_credentials";
-    let basic_auth = base64::encode(format!("{}:{}", client_id, client_secret));
+    let basic_auth = Engine::encode(format!("{}:{}", client_id, client_secret));
 
     let response = client.post("https://accounts.spotify.com/api/token")
     .header(reqwest::header::AUTHORIZATION, format!("Basic {}", basic_auth))
