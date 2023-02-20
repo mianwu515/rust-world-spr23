@@ -30,12 +30,62 @@ fn get_access_token(client_id: &str, client_secret: &str) ->   Result<String, Bo
     Ok(response.access_token)
 }
 
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Deserialize, Serialize)]
+struct RecommendationResponse {
+    tracks: Vec<Track>,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Track {
+    name: String,
+    artists: Vec<Artist>,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Artist {
+    name: String,
+}
+
+fn get_recommendations(access_token: &str, genre: &str) -> Result<Vec<Track>, Box<dyn std::error::Error>> {
+    let client = reqwest::blocking::Client::new();
+    let mut headers = reqwest::header::HeaderMap::new();
+    headers.insert(reqwest::header::AUTHORIZATION, format!("Bearer {}", access_token).parse().unwrap());
+
+    let response = client.get("https://api.spotify.com/v1/recommendations")
+        .headers(headers)
+        .query(&[("seed_genres", genre)])
+        .send()?
+        .json::<RecommendationResponse>()?;
+
+    Ok(response.tracks)
+}
+
+// query possible genres
+fn get_possible_genres(access_token: &str) -> Result<RecommendationResponse, Box<dyn std::error::Error>> {) {
+    let client = reqwest::blocking::Client::new();
+    let mut headers = reqwest::header::HeaderMap::new();
+    headers.insert(reqwest::header::AUTHORIZATION, format!("Bearer {}", access_token).parse().unwrap());
+
+    let response = client.get("https://api.spotify.com/v1/recommendations/available-genre-seeds")
+        .headers(headers)
+        .send()?
+        .json::<RecommendationResponse>()?;
+    Ok(response)
+}
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let client_id = "YOUR_CLIENT_ID";
     let client_secret = "YOUR_CLIENT_SECRET";
     let access_token = get_access_token(client_id, client_secret)?;
 
     println!("Access token: {}", access_token);
+    
+    // print out the recommendations for the genre "war"
+    let recommendations = get_recommendations(&access_token, "war")?;
+    for track in recommendations {
+        println!("{} by {}", track.name, track.artists[0].name);
+    }
 
     Ok(())
 }
