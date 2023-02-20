@@ -25,6 +25,7 @@ Cargo.lock
 # actix-containerized-microservice-wk3
 actix-containerized-microservice-wk3/actixdocker/target/
 
+*/target/
 week1/target/
 week2/target/
 week2/my-first-lambda-function/target/
