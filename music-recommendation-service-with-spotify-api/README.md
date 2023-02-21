@@ -11,6 +11,7 @@ reqwest = { version = "0.11", features = ["json"] }
 serde_json = "1.0"
 ```
 
+### Obtain a "Client ID" and a "Client Secret"
 * Authenticate with the API: To access the Spotify Web API, you will need to authenticate with an access token. You can obtain an access token by following the steps in the Spotify Web API documentation.
 
     - Go to the Spotify for Developers website (https://developer.spotify.com/dashboard/applications).
@@ -25,6 +26,7 @@ serde_json = "1.0"
 
     - Note down the "Client ID" and "Client Secret" values from the app dashboard, as you will need these to authenticate with the Spotify Web API.
 
+### Obtain an access token
     - To obtain an access token, you will need to make a POST request to the Spotify Web API's token endpoint. Here's an example using the reqwest Rust library:
 
     ```Rust
