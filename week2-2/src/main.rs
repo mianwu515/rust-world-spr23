@@ -1,6 +1,6 @@
 use lambda_runtime::{run, service_fn, Error, LambdaEvent};
-use serde::{Deserialize, Serialize};
 use myfirstlambdafunction::play;
+use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize)]
 struct Request {

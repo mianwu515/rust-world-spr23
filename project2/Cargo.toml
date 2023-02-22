@@ -1,0 +1,16 @@
+[package]
+name = "project2"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web-upload-example = "0.0.2"
+reqwest = { version = "0.11", features = ["blocking"] }
+select = "0.6.0"
+transformers = "0.1.0"
+anyhow = "1.0.0"
+rust-bert = "0.20.0"
+clap = {version="4.0.32", features=["derive"]}
+actix-web = "4.0.0-beta.8"

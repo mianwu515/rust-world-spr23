@@ -25,10 +25,25 @@ Cargo.lock
 # actix-containerized-microservice-wk3
 actix-containerized-microservice-wk3/actixdocker/target/
 
+*/target/
+<<<<<<< HEAD
+=======
 week1/target/
 week2/target/
 week2/my-first-lambda-function/target/
 week3/target/
 week4/target/
+>>>>>>> 58263f71b37ac161b985cf50c1a1e97cad0dd774
+
+#myawsdynamodb/target/
+#week1/target/
+#week2/target/
+#week2-2/target/
+#week3/target/
+#week4/target/
+#week4-2/target/ 
+#week5/target/
 
 aws/
+
+.aws/

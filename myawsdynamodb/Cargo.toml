@@ -1,0 +1,23 @@
+[package]
+name = "myawsdynamodb"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+aws-config = "0.54.1"
+aws-sdk-dynamodb = "0.24.0"
+tokio = { version = "1", features = ["full"] }
+clap = {version="4.0.32", features=["derive"]}
+serde = "1"
+log = "0.4"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+# NOTE: the following crate is not part of the SDK, but it is maintained by AWS.
+lambda_runtime = "0.7.3"
+# We are using the Amazon Simple Storage Service (Amazon S3) crate in this example,
+# but you can use any SDK crate in your Lambda code.
+aws-sdk-s3 = "0.24.0"
+
+[dev-dependencies]
+assert_cmd = "2.0.8"

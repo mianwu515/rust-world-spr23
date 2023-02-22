@@ -1,8 +1,8 @@
-// Create a CLI tool: random image with n randomly colored pixels, where n is the input.
+// Create a CLI tool: random image generator
 //
 // The tool should take the following arguments:
-// - width
-// - height
+// - x
+// - y
 // - output
 //
 // The tool should generate a random image with the given width and height and save it to the given output file.
@@ -12,8 +12,6 @@
 // The tool should use rand to generate the random pixels.
 //
 // The tool should use image to save the image.
-//
-// The tool should use the following code to generate the image:
 //
 use clap::Parser;
 use rand::Rng;
@@ -26,17 +24,17 @@ use rand::Rng;
 )]
 struct Cli {
     #[clap(short, long)]
-    width: u32,
+    x: u32,
     #[clap(short, long)]
-    height: u32,
+    y: u32,
     #[clap(short, long)]
     output: String,
 }
 
 fn main() {
     let args = Cli::parse();
-    let imgx = args.width;
-    let imgy = args.height;
+    let imgx = args.x;
+    let imgy = args.y;
     let output = args.output;
     
     let args: Vec<_> = std::env::args().collect(); // get all arguements passed to app
@@ -48,14 +46,19 @@ fn main() {
 
     let mut rng = rand::thread_rng();
     // Iterate over the coordinates and pixels of the image
-    for (_x, _y, pixel) in imgbuf.enumerate_pixels_mut() {
-        let r = rng.gen_range(0..255) as u8;
-        let g = rng.gen_range(0..255) as u8;
-        let b = rng.gen_range(0..255) as u8;
+    for (x, y, pixel) in imgbuf.enumerate_pixels_mut() {
+        let f = rng.gen_range(0.0..1.0);
+        let r = (f * x as f32) as u8;
+        let g = ((1.0 - f) * (x + y) as f32) as u8;
+        let b = (f * y as f32) as u8;
+
         *pixel = image::Rgb([r, g, b]);
     }
 
     // Save the image as “fractal.png”, the format is deduced from the path
     imgbuf.save(output + ".png").unwrap();
+<<<<<<< HEAD
     */
+=======
+>>>>>>> 9f0e72003a7831e19091f1b67b9692b15001588b
 }

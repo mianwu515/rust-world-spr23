@@ -16,9 +16,7 @@ test:
 	cargo test --quiet
 
 run:
-	cargo run 
-run-default:
-	cargo run -- --x 800 --y 800 --output output
+	cargo run
 
 release:
 	cargo build --release
