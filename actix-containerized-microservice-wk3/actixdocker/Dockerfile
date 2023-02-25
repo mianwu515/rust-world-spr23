@@ -5,9 +5,7 @@ COPY . .
 RUN cargo install --path .
 
 FROM debian:buster-slim
-ENV APP actixdocker
-WORKDIR /usr/src/$APP
-COPY --from=builder /usr/local/cargo/bin/$APP .
+COPY --from=builder /usr/local/cargo/bin/$APP  /usr/local/bin/$APP
 EXPOSE 8080
 CMD ["./actixdocker"]
 
