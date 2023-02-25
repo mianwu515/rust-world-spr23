@@ -51,3 +51,4 @@ The dev env is AWS Cloud9. If you directly run the codes from this Codespaces, i
 * [containerized-actix-continuous-delivery-to-aws-apprunner](https://github.com/nogibjj/rust-mlops-template/blob/main/README.md#containerized-actix-continuous-delivery-to-aws-app-runner)
 * [webdocker-github-code-example](https://github.com/nogibjj/rust-mlops-template/tree/main/webdocker)
 * [install-docker-on-debian](https://www.fosslinux.com/49959/install-docker-on-debian.html)
+* [create-docker-image-pull/push-image](https://www.pluralsight.com/guides/create-docker-images-docker-hub)
