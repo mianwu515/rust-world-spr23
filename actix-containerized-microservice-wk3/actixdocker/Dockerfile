@@ -1,13 +1,11 @@
+# build stage
 FROM rust:latest as builder
-ENV APP actixdocker
-WORKDIR /usr/src/$APP
+WORKDIR /usr/src/actixdocker
 COPY . .
-RUN cargo install --path .
+RUN cargo build --release
 
+# runtime stage
 FROM debian:buster-slim
-RUN apt-get update && rm -rf /var/lib/apt/lists/*
-COPY --from=builder /usr/local/cargo/bin/$APP /usr/local/bin/$APP
-#export this actix web service to port 8080 and 0.0.0.0
+COPY --from=builder /usr/src/actixdocker/target/release/actixdocker /usr/local/bin/actixdocker
 EXPOSE 8080
 CMD ["actixdocker"]
-

@@ -16,8 +16,12 @@ build:
 	docker build -t rockpaperscissors .
 
 
-rundocker:
+rundockerlocally:
 	docker run -it --rm -p 8080:8080 rockpaperscissors
 	
+
+rundockercontainer:
+	docker pull mianwu/rockpaperscissors:latest
+	docker run -it --rm -p 8080:8080 mianwu/rockpaperscissors:latest
 
 all: format lint run
