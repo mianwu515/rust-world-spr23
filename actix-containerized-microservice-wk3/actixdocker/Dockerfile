@@ -1,11 +1,11 @@
+# build stage
 FROM rust:latest as builder
-ENV APP actixdocker
-WORKDIR /usr/src/$APP
+WORKDIR /usr/src/actixdocker
 COPY . .
-RUN cargo install --path .
+RUN cargo build --release
 
+# runtime stage
 FROM debian:buster-slim
-COPY --from=builder /usr/local/cargo/bin/$APP  /usr/local/bin/$APP
+COPY --from=builder /usr/src/actixdocker/target/release/actixdocker /usr/local/bin/actixdocker
 EXPOSE 8080
-CMD ["./actixdocker"]
-
+CMD ["actixdocker"]

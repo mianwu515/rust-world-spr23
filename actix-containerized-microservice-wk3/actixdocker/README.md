@@ -12,14 +12,24 @@ make lint
 make run
 ```
 After this, you should be able to launch your localhost web service! go to http://localhost:8080/rock
-* 2. -> to containerize it (make sure docker is properly configured and started)
+* 2. To containerize your app and launch a docker container
+    * 2.1 Pull a ready docker image and launch it (make sure docker is properly configured and started)
+    run `make pullimageandruncontainer`
 
-```bash
-make build # build an image out of the Dockerfile
-make rundocker # launch the container from the image
-```
-After this, you should also find http://localhost:8080/paper this work
-* 3. -> to deploy a Continuous Delivery of the web service using AWS ECR and App Runner
+    To push an image to DockerHub, you could follow these steps:
+    * `docker login` and enter your docker "user_name" and "user_secret" as prompted
+    * `docker build -t [NAME OF YOUR APP] .` 
+        * You could just run `make build` for this program
+        * # This is to build an image out of the Dockerfile
+    * `docker tag [NAME OF YOUR APP]:latest [YOUR DOCKER USER NAME]/[NAME OF YOUR APP]:latest`
+    * `docker push [YOUR DOCKER USER NAME]/[NAME OF YOUR APP]:latest`
+    
+    * 2.2 Build and run your own docker container
+        * run `make build`
+        * run `make runlocallybuiltdockercontainer`
+
+After these steps (either locally deployed or containerized), you should be able to find the website works: http://localhost:8080/paper this work
+* 3. To deploy a Continuous Delivery of the web service using AWS ECR and App Runner
 
 1. Set up AWS Cloud9 Rust env with [rustup](https://rustup.rs/), git config global settings, etc.
 2. [Generate an SSH public key](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) and configure it to your github account (if you want to later develop on your cloud env using push/pull stuffs)
