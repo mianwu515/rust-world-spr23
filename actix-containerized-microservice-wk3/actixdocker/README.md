@@ -62,3 +62,5 @@ The dev env is AWS Cloud9. If you directly run the codes from this Codespaces, i
 * [webdocker-github-code-example](https://github.com/nogibjj/rust-mlops-template/tree/main/webdocker)
 * [install-docker-on-debian](https://www.fosslinux.com/49959/install-docker-on-debian.html)
 * [create-docker-image-pull/push-image](https://www.pluralsight.com/guides/create-docker-images-docker-hub)
+* [install-and-use-docker-on-ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04)
+* [error-the-repo-does-not-have-a-release-while-installing-docker-on-ubuntu](https://stackoverflow.com/questions/73175063/the-repository-does-not-have-a-release-file-error-on-debian-11-bullseye-even)
