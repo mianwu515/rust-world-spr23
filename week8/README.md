@@ -3,6 +3,7 @@
 ```bash
 serverless deploy
 ```
+<<<<<<< HEAD
 `
 Deploying random-fact-generator to stage dev (us-east-1)
 
@@ -12,6 +13,17 @@ endpoint: GET - https://mal9wcp1pa.execute-api.us-east-1.amazonaws.com/dev/fact
 functions:
   rand-fact-generator-rust: random-fact-generator-dev-rand-fact-generator-rust (2.6 MB)
 `
+=======
+
+> Deploying random-fact-generator to stage dev (us-east-1)
+
+> ✔ Service deployed to stack random-fact-generator-dev (73s)
+
+> endpoint: GET - https://mal9wcp1pa.execute-api.us-east-1.amazonaws.com/dev/fact
+> functions:
+>   rand-fact-generator-rust: random-fact-generator-dev-rand-fact-generator-rust (2.6 MB)
+
+>>>>>>> 4b314ff (update readme)
 
 A detailed guide and references can be found [here](https://github.com/nogibjj/rust-on-aws-lambda)
 
