@@ -57,8 +57,5 @@ fn main() {
 
     // Save the image as “fractal.png”, the format is deduced from the path
     imgbuf.save(output + ".png").unwrap();
-<<<<<<< HEAD
     */
-=======
->>>>>>> 9f0e72003a7831e19091f1b67b9692b15001588b
 }
