@@ -9,7 +9,9 @@ serverless deploy
 > ✔ Service deployed to stack random-fact-generator-dev (73s)
 
 > endpoint: GET - https://mal9wcp1pa.execute-api.us-east-1.amazonaws.com/dev/fact
+
 > functions:
+
 >   rand-fact-generator-rust: random-fact-generator-dev-rand-fact-generator-rust (2.6 MB)
 
 
