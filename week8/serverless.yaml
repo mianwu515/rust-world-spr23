@@ -1,4 +1,4 @@
-service: mw515-rust-lambda
+service: random-fact-generator
 
 provider:
   name: aws
@@ -15,9 +15,5 @@ functions:
     handler: ./bootstrap
     events:
       - http:
-          path: /pizza/{pizza_name}/price
+          path: /fact
           method: GET
-          request:
-            parameters:
-              paths:
-                pizza_name: true

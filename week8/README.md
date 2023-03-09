@@ -1,6 +1,8 @@
-# A handful of possible usages of AWS Lambda
+# Random-fact-generator - A Serverless Web Application
 
+A detailed guide and references can be found [here](https://github.com/nogibjj/rust-on-aws-lambda)
 
+## A handful of possible usages of AWS Lambda
 * Serverless Web Application: You can use Lambda to build a serverless web application that interacts with a database and serves web pages or API endpoints. Lambda can be used to process user requests, retrieve data from the database, and return dynamic content to the user.
 
 * Data Processing: Lambda can be used to process data in real-time or batch mode. For example, you can use Lambda to process incoming data from IoT devices or data streams and trigger downstream processes.
