@@ -1,0 +1,23 @@
+service: mw515-rust-lambda
+
+provider:
+  name: aws
+  runtime: provided.al2
+
+package:
+  exclude:
+    - ./**
+  include:
+    - ./bootstrap
+
+functions:
+  pizza-rust:
+    handler: ./bootstrap
+    events:
+      - http:
+          path: /pizza/{pizza_name}/price
+          method: GET
+          request:
+            parameters:
+              paths:
+                pizza_name: true
