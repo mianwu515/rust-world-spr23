@@ -71,10 +71,10 @@
         }
       }
     },
-    "PizzaDashrustLogGroup": {
+    "RandDashfactDashgeneratorDashrustLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/random-fact-generator-dev-pizza-rust"
+        "LogGroupName": "/aws/lambda/random-fact-generator-dev-rand-fact-generator-rust"
       }
     },
     "IamRoleLambdaExecution": {
@@ -155,18 +155,18 @@
         }
       }
     },
-    "PizzaDashrustLambdaFunction": {
+    "RandDashfactDashgeneratorDashrustLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/random-fact-generator/dev/1678400188047-2023-03-09T22:16:28.047Z/random-fact-generator.zip"
+          "S3Key": "serverless/random-fact-generator/dev/1678401039260-2023-03-09T22:30:39.260Z/random-fact-generator.zip"
         },
         "Handler": "./bootstrap",
         "Runtime": "provided.al2",
-        "FunctionName": "random-fact-generator-dev-pizza-rust",
+        "FunctionName": "random-fact-generator-dev-rand-fact-generator-rust",
         "MemorySize": 1024,
         "Timeout": 6,
         "Role": {
@@ -177,15 +177,15 @@
         }
       },
       "DependsOn": [
-        "PizzaDashrustLogGroup"
+        "RandDashfactDashgeneratorDashrustLogGroup"
       ]
     },
-    "PizzaDashrustLambdaVersion0aPnPwGX6gLHmDFavjFDwfk6Q7lF6Wm5ocYZ8DE5qY": {
+    "RandDashfactDashgeneratorDashrustLambdaVersionLKyVstJOw76QaBSPbY2coSiwOFCtjZN8EX7On7g": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
-          "Ref": "PizzaDashrustLambdaFunction"
+          "Ref": "RandDashfactDashgeneratorDashrustLambdaFunction"
         },
         "CodeSha256": "BStoEkOectzUHh6/uxzjJ2AJzQrU3YhxM+szA93Ooe0="
       }
@@ -248,7 +248,7 @@
                 ":lambda:path/2015-03-31/functions/",
                 {
                   "Fn::GetAtt": [
-                    "PizzaDashrustLambdaFunction",
+                    "RandDashfactDashgeneratorDashrustLambdaFunction",
                     "Arn"
                   ]
                 },
@@ -260,10 +260,10 @@
         "MethodResponses": []
       },
       "DependsOn": [
-        "PizzaDashrustLambdaPermissionApiGateway"
+        "RandDashfactDashgeneratorDashrustLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1678400186634": {
+    "ApiGatewayDeployment1678401037795": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -275,12 +275,12 @@
         "ApiGatewayMethodFactGet"
       ]
     },
-    "PizzaDashrustLambdaPermissionApiGateway": {
+    "RandDashfactDashgeneratorDashrustLambdaPermissionApiGateway": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
           "Fn::GetAtt": [
-            "PizzaDashrustLambdaFunction",
+            "RandDashfactDashgeneratorDashrustLambdaFunction",
             "Arn"
           ]
         },
@@ -322,13 +322,13 @@
         "Name": "sls-random-fact-generator-dev-ServerlessDeploymentBucketName"
       }
     },
-    "PizzaDashrustLambdaFunctionQualifiedArn": {
+    "RandDashfactDashgeneratorDashrustLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "PizzaDashrustLambdaVersion0aPnPwGX6gLHmDFavjFDwfk6Q7lF6Wm5ocYZ8DE5qY"
+        "Ref": "RandDashfactDashgeneratorDashrustLambdaVersionLKyVstJOw76QaBSPbY2coSiwOFCtjZN8EX7On7g"
       },
       "Export": {
-        "Name": "sls-random-fact-generator-dev-PizzaDashrustLambdaFunctionQualifiedArn"
+        "Name": "sls-random-fact-generator-dev-RandDashfactDashgeneratorDashrustLambdaFunctionQualifiedArn"
       }
     },
     "ServiceEndpoint": {

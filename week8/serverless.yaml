@@ -11,7 +11,7 @@ package:
     - ./bootstrap
 
 functions:
-  pizza-rust:
+  rand-fact-generator-rust:
     handler: ./bootstrap
     events:
       - http:
