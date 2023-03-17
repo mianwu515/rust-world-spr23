@@ -1,129 +1,66 @@
-// write a Rust Lambda program that interacts with AWS DynamoDB using the rusoto_dynamodb crate
-// https://docs.rs/rusoto_dynamodb/0.43.0/rusoto_dynamodb/index.html
-// that can read and write data to a DynamoDB table
-// get price of a coffee
-// post a coffee order
-// get a list of all coffee orders
-// get total number of coffee orders
-
-// Path: week9/src/main.rs
-// Compare this snippet from week8/src/main.rs:
-//     fact_list.facts[rng.gen_range(0..l)]
-// }
-//
-// async fn build_success_response(fact: &'static str) -> Response<Body> {
-//     json!({ "fact": fact }).into_response().await
-// }
-//
-// async fn build_failure_response(error_message: &str) -> Response<Body> {
-//     Response::builder()
-//         .status(400)
-//         .header("content-type", "application/json")
-//         .body(Body::from(json!({ "error": error_message }).to_string()))
-//         .expect("could not build the error response")
-// }
-//
-// fn process_event(fact_list: &FactList) -> &'static str {
-//     get_random_fact(fact_list)
-// }
-//
-// #[tokio::main]
-// async fn main() -> Result<(), Error> {
-//     let all_facts = &FactList::new();
-//     let handler_func = |event: Request| async move {
-//         let response = build_success_response(process_event(all_facts)).await;
-//         Result::<Response<Body>, Error>::Ok(response)
-//     };
-//     run(service_fn(handler_func)).await?;
-//     Ok(())
-// }
-//
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
-//
-//     #[test]  
-//     fn new_fact_list_test() {
-//         let all_facts: FactList = FactList::new();
-//         assert_eq!(5, all_facts.facts.len());
-//     }
-//
-//     #[tokio::test]
-//     async fn build_success_response_test() {
-//         let test_fact = "This is a test fact.";
-//         let result = build_success_response(test_fact).await;
-//         let (parts, body) = result.into_parts();
-//         assert_eq!(200, parts.status.as_u16());
-//         assert_eq!(
-//             "application/json",
-//             parts.headers.get("content-type").unwrap()
-//         );
-//         assert_eq!(
-//             "{\"fact\":\"This is a test fact.\"}",
-//             String::from_utf8(body.to_ascii_lowercase()).unwrap()
-//         );
-//     }
-//
-//     #[tokio::test]
-//     async fn build_failure_response_test() {
-//         let result = build_failure_response("test error message").await;
-//         let (parts, body) = result.into_parts();
-//         assert_eq!(400, parts.status.as_u16());
-//         assert_eq!(
-//             "application/json",
-//             parts.headers.get("content-type").unwrap()
-//         );
-//         assert_eq!(
-//             "{\"error\":\"test error message\"}",
-//             String::from_utf8(body.to_ascii_lowercase()).unwrap()
-//         );
-//     }
-// }
-
-
 use lambda_http::{
-    aws_lambda_events::serde_json::json, run, service_fn, Body, Error, IntoResponse, Request,
-    RequestExt, Response,
+    aws_lambda_events::event::apigw::{ApiGatewayProxyRequest, ApiGatewayProxyResponse},
+    http::header::HeaderMap,
+    lambda_runtime::{self, Context},
+    IntoResponse, Request, RequestExt, Response,
 };
+use reqwest::Client;
+use serde::{Deserialize, Serialize};
 
-use serde::Serialize;
-
-
-// connect to DynamoDB
-// https://docs.rs/rusoto_dynamodb/0.43.0/rusoto_dynamodb/index.html
-use rusoto_core::Region;
-use rusoto_dynamodb::{DynamoDb, DynamoDbClient, GetItemInput, PutItemInput};
-
-// create a struct to hold the data we want to store in DynamoDB
-// https://docs.rs/rusoto_dynamodb/0.43.0/rusoto_dynamodb/struct.PutItemInput.html
-#[derive(Serialize)]
-struct CoffeeOrder {
+#[derive(Deserialize, Serialize, Debug)]
+struct DadJoke {
     id: String,
-    name: String,
-    size: String,
-    price: String,
+    joke: String,
 }
 
-// create a function to get a coffee order from DynamoDB
-// https://docs.rs/rusoto_dynamodb/0.43.0/rusoto_dynamodb/struct.GetItemInput.html
+async fn handler(
+    _: Request,
+    _: Context,
+) -> Result<impl IntoResponse, lambda_http::Error> {
+    let client = Client::new();
 
-// create a function to put a coffee order into DynamoDB
-// https://docs.rs/rusoto_dynamodb/0.43.0/rusoto_dynamodb/struct.PutItemInput.html
+    let dadjoke: DadJoke = client
+        .get("https://icanhazdadjoke.com/")
+        .header("Accept", "application/json")
+        .header(
+            "User-Agent",
+            "Rust Adventure Serverless Examples (https://github.com/rust-adventure/netlify-serverless-examples)",
+        )
+        .send()
+        .await?
+        .json()
+        .await?;
 
-// create a function to get the price of a coffee from DynamoDB
-// https://docs.rs/rusoto_dynamodb/0.43.0/rusoto_dynamodb/struct.GetItemInput.html
-
-// create a function to get the total number of coffee orders from DynamoDB
-// https://docs.rs/rusoto_dynamodb/0.43.0/rusoto_dynamodb/struct.GetItemInput.html
+    Ok(ApiGatewayProxyResponse {
+        status_code: 200,
+        headers: HeaderMap::new(),
+        multi_value_headers: HeaderMap::new(),
+        body: serde_json::to_string(&dadjoke).unwrap().into(),
+    })
+}
 
 #[tokio::main]
-async fn main() -> Result<(), Error> {
-    let all_facts = &FactList::new();
-    let handler_func = |event: Request| async move {
-        let response = build_success_response(process_event(all_facts)).await;
-        Result::<Response<Body>, Error>::Ok(response)
-    };
-    run(service_fn(handler_func)).await?;
+async fn main() -> Result<(), lambda_runtime::Error> {
+    lambda_runtime::run(handler).await?;
     Ok(())
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use http::StatusCode;
+
+    #[tokio::test]
+    async fn test_handler() {
+        let response = handler(Request::default(), Context::default())
+            .await
+            .unwrap()
+            .into_response();
+
+        assert_eq!(response.status(), StatusCode::OK);
+
+        let body = response.into_body().concat2().await.unwrap();
+        let dadjoke: DadJoke = serde_json::from_slice(&body).unwrap();
+        assert!(!dadjoke.joke.is_empty());
+    }
+}
