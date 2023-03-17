@@ -1,0 +1,19 @@
+service: dadjoke-lambda
+
+provider:
+  name: aws
+  runtime: provided.al2
+
+package:
+  exclude:
+    - ./**
+  include:
+    - ./bootstrap
+
+functions:
+  dadjoke-lambda-rust:
+    handler: ./bootstrap
+    events:
+      - http:
+          path: /dadjoke
+          method: GET
