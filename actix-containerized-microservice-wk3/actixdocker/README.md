@@ -47,6 +47,8 @@ After these steps (either locally deployed or containerized), you should be able
 ![image-app-runner](pictures/apprunner1.png)
 ![image-app-runner1](pictures/apprunner.png)
 ![image-app-runner](pictures/apprunner2.png)
+remember to set the port so that it will not have conflict with other services
+![image-app-runner](pictures/ecr_port.png)
 7. Wait for completion of the deployment.
 8. Open up the app url! 
 	- Mine is https://wnqfmhu9xj.us-east-1.awsapprunner.com/rock
