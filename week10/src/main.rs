@@ -1,66 +1,134 @@
-use lambda_http::{
-    aws_lambda_events::event::apigw::{ApiGatewayProxyRequest, ApiGatewayProxyResponse},
-    http::header::HeaderMap,
-    lambda_runtime::{self, Context},
-    IntoResponse, Request, RequestExt, Response,
-};
-use reqwest::Client;
-use serde::{Deserialize, Serialize};
-
-#[derive(Deserialize, Serialize, Debug)]
-struct DadJoke {
-    id: String,
-    joke: String,
-}
-
-async fn handler(
-    _: Request,
-    _: Context,
-) -> Result<impl IntoResponse, lambda_http::Error> {
-    let client = Client::new();
-
-    let dadjoke: DadJoke = client
-        .get("https://icanhazdadjoke.com/")
-        .header("Accept", "application/json")
-        .header(
-            "User-Agent",
-            "Rust Adventure Serverless Examples (https://github.com/rust-adventure/netlify-serverless-examples)",
-        )
-        .send()
-        .await?
-        .json()
-        .await?;
-
-    Ok(ApiGatewayProxyResponse {
-        status_code: 200,
-        headers: HeaderMap::new(),
-        multi_value_headers: HeaderMap::new(),
-        body: serde_json::to_string(&dadjoke).unwrap().into(),
-    })
-}
-
-#[tokio::main]
-async fn main() -> Result<(), lambda_runtime::Error> {
-    lambda_runtime::run(handler).await?;
-    Ok(())
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use http::StatusCode;
-
-    #[tokio::test]
-    async fn test_handler() {
-        let response = handler(Request::default(), Context::default())
-            .await
-            .unwrap()
-            .into_response();
-
-        assert_eq!(response.status(), StatusCode::OK);
-
-        let body = response.into_body().concat2().await.unwrap();
-        let dadjoke: DadJoke = serde_json::from_slice(&body).unwrap();
-        assert!(!dadjoke.joke.is_empty());
+mod config {
+    use serde::Deserialize;
+    #[derive(Debug, Default, Deserialize)]
+    pub struct ExampleConfig {
+        pub server_addr: String,
+        pub pg: deadpool_postgres::Config,
     }
+}
+
+mod models {
+    use serde::{Deserialize, Serialize};
+    use tokio_pg_mapper_derive::PostgresMapper;
+
+    #[derive(Deserialize, PostgresMapper, Serialize)]
+    #[pg_mapper(table = "users")] // singular 'user' is a keyword..
+    pub struct User {
+        pub email: String,
+        pub first_name: String,
+        pub last_name: String,
+        pub username: String,
+    }
+}
+
+mod errors {
+    use actix_web::{HttpResponse, ResponseError};
+    use deadpool_postgres::PoolError;
+    use derive_more::{Display, From};
+    use tokio_pg_mapper::Error as PGMError;
+    use tokio_postgres::error::Error as PGError;
+
+    #[derive(Display, From, Debug)]
+    pub enum MyError {
+        NotFound,
+        PGError(PGError),
+        PGMError(PGMError),
+        PoolError(PoolError),
+    }
+    impl std::error::Error for MyError {}
+
+    impl ResponseError for MyError {
+        fn error_response(&self) -> HttpResponse {
+            match *self {
+                MyError::NotFound => HttpResponse::NotFound().finish(),
+                MyError::PoolError(ref err) => {
+                    HttpResponse::InternalServerError().body(err.to_string())
+                }
+                _ => HttpResponse::InternalServerError().finish(),
+            }
+        }
+    }
+}
+
+mod db {
+    use deadpool_postgres::Client;
+    use tokio_pg_mapper::FromTokioPostgresRow;
+
+    use crate::{errors::MyError, models::User};
+
+    pub async fn add_user(client: &Client, user_info: User) -> Result<User, MyError> {
+        let _stmt = include_str!("../sql/add_user.sql");
+        let _stmt = _stmt.replace("$table_fields", &User::sql_table_fields());
+        let stmt = client.prepare(&_stmt).await.unwrap();
+
+        client
+            .query(
+                &stmt,
+                &[
+                    &user_info.email,
+                    &user_info.first_name,
+                    &user_info.last_name,
+                    &user_info.username,
+                ],
+            )
+            .await?
+            .iter()
+            .map(|row| User::from_row_ref(row).unwrap())
+            .collect::<Vec<User>>()
+            .pop()
+            .ok_or(MyError::NotFound) // more applicable for SELECTs
+    }
+}
+
+mod handlers {
+    use actix_web::{web, Error, HttpResponse};
+    use deadpool_postgres::{Client, Pool};
+
+    use crate::{db, errors::MyError, models::User};
+
+    pub async fn add_user(
+        user: web::Json<User>,
+        db_pool: web::Data<Pool>,
+    ) -> Result<HttpResponse, Error> {
+        let user_info: User = user.into_inner();
+
+        let client: Client = db_pool.get().await.map_err(MyError::PoolError)?;
+
+        let new_user = db::add_user(&client, user_info).await?;
+
+        Ok(HttpResponse::Ok().json(new_user))
+    }
+}
+
+use ::config::Config;
+use actix_web::{web, App, HttpServer};
+use dotenv::dotenv;
+use handlers::add_user;
+use tokio_postgres::NoTls;
+
+use crate::config::ExampleConfig;
+
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    dotenv().ok();
+
+    let config_ = Config::builder()
+        .add_source(::config::Environment::default())
+        .build()
+        .unwrap();
+
+    let config: ExampleConfig = config_.try_deserialize().unwrap();
+
+    let pool = config.pg.create_pool(None, NoTls).unwrap();
+
+    let server = HttpServer::new(move || {
+        App::new()
+            .app_data(web::Data::new(pool.clone()))
+            .service(web::resource("/users").route(web::post().to(add_user)))
+    })
+    .bind(config.server_addr.clone())?
+    .run();
+    println!("Server running at http://{}/", config.server_addr);
+
+    server.await
 }
