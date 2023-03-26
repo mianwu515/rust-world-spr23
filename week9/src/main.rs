@@ -55,7 +55,7 @@ async fn create_username_index(client: &Client) {
 #[actix_web::main]
     async fn main() -> mongodb::error::Result<()> {
 	let uri = std::env::var("MONGODB_URI").unwrap_or_else(|_| "mongodb://localhost:27017".into());
-	println!("{}", uri);        
+	//println!("{}", uri);        
 	
 	//let client_options = ClientOptions::parse(
         //    &(std::env::var("MONGODB_URI").unwrap_or_else(|_| "mongodb://localhost:27017".into())),
