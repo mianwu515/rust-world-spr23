@@ -4,7 +4,9 @@ mod model;
 
 use actix_web::{get, post, web, App, HttpResponse, HttpServer};
 use model::User;
-use mongodb::{bson::doc, options::ClientOptions, options::IndexOptions, Client, Collection, IndexModel};
+use mongodb::{
+    bson::doc, options::ClientOptions, options::IndexOptions, Client, Collection, IndexModel,
+};
 
 const DB_NAME: &str = "myApp";
 const COLL_NAME: &str = "users";
@@ -53,30 +55,29 @@ async fn create_username_index(client: &Client) {
 }
 
 #[actix_web::main]
-    async fn main() -> mongodb::error::Result<()> {
-	let uri = std::env::var("MONGODB_URI").unwrap_or_else(|_| "mongodb://localhost:27017".into());
-	//println!("{}", uri);        
-	
-	//let client_options = ClientOptions::parse(
-        //    &(std::env::var("MONGODB_URI").unwrap_or_else(|_| "mongodb://localhost:27017".into())),
-        //)
-        //.await?;
-        //let client = Client::with_options(client_options)?;
- 	let client = Client::with_uri_str(uri).await.expect("failed to connect");
-	create_username_index(&client).await;
-        
-        //let database = client.database(DB_NAME);
-        
+async fn main() -> mongodb::error::Result<()> {
+    let uri = std::env::var("MONGODB_URI").unwrap_or_else(|_| "mongodb://localhost:27017".into());
+    //println!("{}", uri);
 
-        HttpServer::new(move || {
-            App::new()
-                .app_data(web::Data::new(client.clone()))
-                .service(add_user)
-                .service(get_user)
-        })
-        .bind(("127.0.0.1", 8080))?
-        .run()
-        .await;
+    //let client_options = ClientOptions::parse(
+    //    &(std::env::var("MONGODB_URI").unwrap_or_else(|_| "mongodb://localhost:27017".into())),
+    //)
+    //.await?;
+    //let client = Client::with_options(client_options)?;
+    let client = Client::with_uri_str(uri).await.expect("failed to connect");
+    create_username_index(&client).await;
 
-        Ok(())
-    }
+    //let database = client.database(DB_NAME);
+
+    HttpServer::new(move || {
+        App::new()
+            .app_data(web::Data::new(client.clone()))
+            .service(add_user)
+            .service(get_user)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await;
+
+    Ok(())
+}
