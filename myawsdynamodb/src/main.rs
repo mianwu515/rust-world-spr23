@@ -16,6 +16,39 @@ struct Cli {
     command: Option<Commands>,
 }
 
+struct CoffeeList {
+    coffees: Vec<Coffee>,
+}
+
+#[derive(Serialize)]
+struct Coffee {
+    id: u32,
+    name: String,
+    price: f32,
+}
+
+impl CoffeeList {
+    fn new() -> CoffeeList {
+        CoffeeList { coffees: vec![
+            Coffee { id: 1, name: String::from("cappuccino"), price: 4.5},
+            Coffee { id: 2, name: String::from("latte"), price: 4.5},
+            Coffee { id: 3, name: String::from("americano"), price: 3},
+            Coffee { id: 4, name: String::from("cold brew"), price: 3.5},
+        ] }
+    }
+}
+
+
+fn get_coffee_from_id<'a>(coffee_id: &'a u32, coffee_list: &'a CoffeeList) -> Option<&'a Coffee> {
+    let mut iter = coffee_list.coffees.iter();
+    iter.find(|coffee: &&Coffee| coffee.id == coffee_id)
+}
+
+fn get_coffee_from_name<'a>(coffee_name: &'a str, coffee_list: &'a CoffeeList) -> Option<&'a Coffee> {
+    let mut iter = coffee_list.coffees.iter();
+    iter.find(|coffee: &&Coffee| coffee.name == coffee_name)
+}
+
 #[derive(Parser)]
 enum Commands {
     List {

@@ -15,12 +15,12 @@ run:
 build:
 	docker build -t rockpaperscissors .
 
-
-rundockerlocally:
+runlocallybuiltdockercontainer:
 	docker run -it --rm -p 8080:8080 rockpaperscissors
 	
 
-rundockercontainer:
+
+pullimageandruncontainer:
 	docker pull mianwu/rockpaperscissors:latest
 	docker run -it --rm -p 8080:8080 mianwu/rockpaperscissors:latest
 
