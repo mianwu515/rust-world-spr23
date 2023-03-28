@@ -17,6 +17,8 @@
 
 ### Use case
 ```bash
+cargo run
+
 curl -v -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "first_name=Mian&last_name=Wu&username=mw515&email=mw515@duke.edu" http://127.0.0.1:8080/add_user
 ```
 
