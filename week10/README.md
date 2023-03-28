@@ -1,10 +1,4 @@
 
-## 
-```bash
-# install serverless plugin
-serverless plugin install -n serverless-rust
 
-npm install -g serverless
-
-sls deploy
-```
+### References
+- [GraphQL-Actix-Upload](https://github.com/async-/examples/blob/master/actix-web/upload/src/main.rs)
