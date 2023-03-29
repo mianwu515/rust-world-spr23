@@ -1,41 +1,118 @@
-use actix_web::{guard, web, web::Data, App, HttpResponse, HttpServer};
-use async_graphql::{
-    http::{GraphiQLSource, MultipartOptions},
-    EmptySubscription, Schema,
-};
-use async_graphql_actix_web::{GraphQLRequest, GraphQLResponse};
-use files::{FilesSchema, MutationRoot, QueryRoot, Storage};
+use std::io::{self, Write};
 
-async fn index(schema: web::Data<FilesSchema>, req: GraphQLRequest) -> GraphQLResponse {
-    schema.execute(req.into_inner()).await.into()
+const BOARD_SIZE: usize = 9;
+
+struct Board {
+    board: [[u8; BOARD_SIZE]; BOARD_SIZE],
 }
 
-async fn gql_playgound() -> HttpResponse {
-    HttpResponse::Ok()
-        .content_type("text/html; charset=utf-8")
-        .body(GraphiQLSource::build().endpoint("/").finish())
+impl Board {
+    fn new() -> Self {
+        Board {
+            board: [[0; BOARD_SIZE]; BOARD_SIZE],
+        }
+    }
+
+    fn print(&self) {
+        for i in 0..BOARD_SIZE {
+            if i % 3 == 0 && i != 0 {
+                println!("------+-------+------");
+            }
+            for j in 0..BOARD_SIZE {
+                if j % 3 == 0 && j != 0 {
+                    print!("| ");
+                }
+                print!("{} ", self.board[i][j]);
+            }
+            println!("");
+        }
+    }
+
+    fn is_valid(&self, row: usize, col: usize, num: u8) -> bool {
+        // Check row
+        for j in 0..BOARD_SIZE {
+            if self.board[row][j] == num {
+                return false;
+            }
+        }
+
+        // Check column
+        for i in 0..BOARD_SIZE {
+            if self.board[i][col] == num {
+                return false;
+            }
+        }
+
+        // Check box
+        let box_row = (row / 3) * 3;
+        let box_col = (col / 3) * 3;
+        for i in 0..3 {
+            for j in 0..3 {
+                if self.board[box_row + i][box_col + j] == num {
+                    return false;
+                }
+            }
+        }
+
+        true
+    }
+
+    fn solve(&mut self) -> bool {
+        let mut empty_pos = None;
+        for i in 0..BOARD_SIZE {
+            for j in 0..BOARD_SIZE {
+                if self.board[i][j] == 0 {
+                    empty_pos = Some((i, j));
+                    break;
+                }
+            }
+            if empty_pos.is_some() {
+                break;
+            }
+        }
+
+        if let Some((row, col)) = empty_pos {
+            for num in 1..=9 {
+                if self.is_valid(row, col, num) {
+                    self.board[row][col] = num;
+                    if self.solve() {
+                        return true;
+                    }
+                    self.board[row][col] = 0;
+                }
+            }
+            false
+        } else {
+            true
+        }
+    }
 }
 
-#[actix_web::main]
-async fn main() -> std::io::Result<()> {
-    let schema = Schema::build(QueryRoot, MutationRoot, EmptySubscription)
-        .data(Storage::default())
-        .finish();
+fn main() {
+    let mut board = Board::new();
 
-    println!("GraphiQL IDE: http://localhost:8000");
+    // Get input
+    println!("Enter the initial board (0 for empty cells):");
+    for i in 0..BOARD_SIZE {
+        print!("Row {}: ", i + 1);
+        io::stdout().flush().unwrap();
+        let mut input = String::new();
+        io::stdin().read_line(&mut input).unwrap();
+        let nums: Vec<u8> = input
+            .trim()
+            .split_whitespace()
+            .map(|s| s.parse().unwrap())
+            .collect();
+        for j in 0..BOARD_SIZE {
+            board.board[i][j] = nums[j];
+        }
+    }
 
-    HttpServer::new(move || {
-        App::new()
-            .app_data(Data::new(schema.clone()))
-            .service(
-                web::resource("/")
-                    .guard(guard::Post())
-                    .to(index)
-                    .app_data(MultipartOptions::default().max_num_files(3)),
-            )
-            .service(web::resource("/").guard(guard::Get()).to(gql_playgound))
-    })
-    .bind("127.0.0.1:8000")?
-    .run()
-    .await
+    // Solve and print
+    if board.solve() {
+        println!("Solution:");
+        board.print();
+    } else {
+        println!("No solution found");
+    }
 }
