@@ -1,134 +1,118 @@
-mod config {
-    use serde::Deserialize;
-    #[derive(Debug, Default, Deserialize)]
-    pub struct ExampleConfig {
-        pub server_addr: String,
-        pub pg: deadpool_postgres::Config,
-    }
+use std::io::{self, Write};
+
+const BOARD_SIZE: usize = 9;
+
+struct Board {
+    board: [[u8; BOARD_SIZE]; BOARD_SIZE],
 }
 
-mod models {
-    use serde::{Deserialize, Serialize};
-    use tokio_pg_mapper_derive::PostgresMapper;
-
-    #[derive(Deserialize, PostgresMapper, Serialize)]
-    #[pg_mapper(table = "users")] // singular 'user' is a keyword..
-    pub struct User {
-        pub email: String,
-        pub first_name: String,
-        pub last_name: String,
-        pub username: String,
+impl Board {
+    fn new() -> Self {
+        Board {
+            board: [[0; BOARD_SIZE]; BOARD_SIZE],
+        }
     }
-}
 
-mod errors {
-    use actix_web::{HttpResponse, ResponseError};
-    use deadpool_postgres::PoolError;
-    use derive_more::{Display, From};
-    use tokio_pg_mapper::Error as PGMError;
-    use tokio_postgres::error::Error as PGError;
-
-    #[derive(Display, From, Debug)]
-    pub enum MyError {
-        NotFound,
-        PGError(PGError),
-        PGMError(PGMError),
-        PoolError(PoolError),
-    }
-    impl std::error::Error for MyError {}
-
-    impl ResponseError for MyError {
-        fn error_response(&self) -> HttpResponse {
-            match *self {
-                MyError::NotFound => HttpResponse::NotFound().finish(),
-                MyError::PoolError(ref err) => {
-                    HttpResponse::InternalServerError().body(err.to_string())
-                }
-                _ => HttpResponse::InternalServerError().finish(),
+    fn print(&self) {
+        for i in 0..BOARD_SIZE {
+            if i % 3 == 0 && i != 0 {
+                println!("------+-------+------");
             }
+            for j in 0..BOARD_SIZE {
+                if j % 3 == 0 && j != 0 {
+                    print!("| ");
+                }
+                print!("{} ", self.board[i][j]);
+            }
+            println!("");
+        }
+    }
+
+    fn is_valid(&self, row: usize, col: usize, num: u8) -> bool {
+        // Check row
+        for j in 0..BOARD_SIZE {
+            if self.board[row][j] == num {
+                return false;
+            }
+        }
+
+        // Check column
+        for i in 0..BOARD_SIZE {
+            if self.board[i][col] == num {
+                return false;
+            }
+        }
+
+        // Check box
+        let box_row = (row / 3) * 3;
+        let box_col = (col / 3) * 3;
+        for i in 0..3 {
+            for j in 0..3 {
+                if self.board[box_row + i][box_col + j] == num {
+                    return false;
+                }
+            }
+        }
+
+        true
+    }
+
+    fn solve(&mut self) -> bool {
+        let mut empty_pos = None;
+        for i in 0..BOARD_SIZE {
+            for j in 0..BOARD_SIZE {
+                if self.board[i][j] == 0 {
+                    empty_pos = Some((i, j));
+                    break;
+                }
+            }
+            if empty_pos.is_some() {
+                break;
+            }
+        }
+
+        if let Some((row, col)) = empty_pos {
+            for num in 1..=9 {
+                if self.is_valid(row, col, num) {
+                    self.board[row][col] = num;
+                    if self.solve() {
+                        return true;
+                    }
+                    self.board[row][col] = 0;
+                }
+            }
+            false
+        } else {
+            true
         }
     }
 }
 
-mod db {
-    use deadpool_postgres::Client;
-    use tokio_pg_mapper::FromTokioPostgresRow;
+fn main() {
+    let mut board = Board::new();
 
-    use crate::{errors::MyError, models::User};
-
-    pub async fn add_user(client: &Client, user_info: User) -> Result<User, MyError> {
-        let _stmt = include_str!("../sql/add_user.sql");
-        let _stmt = _stmt.replace("$table_fields", &User::sql_table_fields());
-        let stmt = client.prepare(&_stmt).await.unwrap();
-
-        client
-            .query(
-                &stmt,
-                &[
-                    &user_info.email,
-                    &user_info.first_name,
-                    &user_info.last_name,
-                    &user_info.username,
-                ],
-            )
-            .await?
-            .iter()
-            .map(|row| User::from_row_ref(row).unwrap())
-            .collect::<Vec<User>>()
-            .pop()
-            .ok_or(MyError::NotFound) // more applicable for SELECTs
+    // Get input
+    println!("Enter the initial board (0 for empty cells):");
+    for i in 0..BOARD_SIZE {
+        print!("Row {}: ", i + 1);
+        io::stdout().flush().unwrap();
+        let mut input = String::new();
+        io::stdin().read_line(&mut input).unwrap();
+        let nums: Vec<u8> = input
+            .trim()
+            .split_whitespace()
+            .map(|s| s.parse().unwrap())
+            .collect();
+        for j in 0..BOARD_SIZE {
+            board.board[i][j] = nums[j];
+        }
     }
-}
 
-mod handlers {
-    use actix_web::{web, Error, HttpResponse};
-    use deadpool_postgres::{Client, Pool};
-
-    use crate::{db, errors::MyError, models::User};
-
-    pub async fn add_user(
-        user: web::Json<User>,
-        db_pool: web::Data<Pool>,
-    ) -> Result<HttpResponse, Error> {
-        let user_info: User = user.into_inner();
-
-        let client: Client = db_pool.get().await.map_err(MyError::PoolError)?;
-
-        let new_user = db::add_user(&client, user_info).await?;
-
-        Ok(HttpResponse::Ok().json(new_user))
+    // Solve and print
+    if board.solve() {
+        println!("Solution:");
+        board.print();
+    } else {
+        println!("No solution found");
     }
-}
-
-use ::config::Config;
-use actix_web::{web, App, HttpServer};
-use dotenv::dotenv;
-use handlers::add_user;
-use tokio_postgres::NoTls;
-
-use crate::config::ExampleConfig;
-
-#[actix_web::main]
-async fn main() -> std::io::Result<()> {
-    dotenv().ok();
-
-    let config_ = Config::builder()
-        .add_source(::config::Environment::default())
-        .build()
-        .unwrap();
-
-    let config: ExampleConfig = config_.try_deserialize().unwrap();
-
-    let pool = config.pg.create_pool(None, NoTls).unwrap();
-
-    let server = HttpServer::new(move || {
-        App::new()
-            .app_data(web::Data::new(pool.clone()))
-            .service(web::resource("/users").route(web::post().to(add_user)))
-    })
-    .bind(config.server_addr.clone())?
-    .run();
-    println!("Server running at http://{}/", config.server_addr);
-
-    server.await
 }

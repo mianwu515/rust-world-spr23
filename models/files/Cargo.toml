@@ -1,8 +1,11 @@
 [package]
-name = "find-sudoku-solution"
+name = "files"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+async-graphql = "5.0.7"
+slab = "0.4.2"
+futures = "0.3.0"
