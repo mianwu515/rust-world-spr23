@@ -33,3 +33,7 @@ build-release:
 	./release.sh
 
 all: format lint test
+
+clean:
+	find . -name "target" -type d -exec rm -rf {} \;
+	find . -name \*~ -type f -delete

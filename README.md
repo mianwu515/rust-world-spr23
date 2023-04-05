@@ -21,6 +21,11 @@
     * Run `cargo run -- --help`
     * Edit and run `make format` to format code
 
+- use df to get a full summary of disk filesystem
+```bash
+df -h # df means "disk filesystem"; it's used to get a full summary of available and used disk space usage of the file system on the Linux system. "-h" means human-readable
+```
+
 * [rust-cli-example](https://github.com/nogibjj/hello-rust)
 * [rust-new-project-template](https://github.com/noahgift/rust-new-project-template)
 * [rust-tutorial-spring2023](https://nogibjj.github.io/rust-tutorial/)
