@@ -30,7 +30,7 @@ cargo run
 ### Useful tips
 - Check whether a port has been used: `sudo lsof -i :9898 -sTCP:LISTEN`
 
-### Appendix - troubleshoots of the deployment on a Linux machine
+### Appendix - troubleshoots of the deployment on the duke Linux machine
 - "error: failed to run custom build command for `openssl-sys v0.9.84`"
     - run `sudo apt-get update`
     - run `sudo apt-get install pkg-config libssl-dev`
