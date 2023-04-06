@@ -1,5 +1,5 @@
 [package]
-name = "summarize-openai"
+name = "summarize"
 version = "0.1.0"
 edition = "2021"
 
@@ -16,7 +16,3 @@ actix-rt = "2.2.0"
 
 dotenv = "0.15.0"
 actix-files = "0.6.2"
-
-[lib]
-name = "main"
-path = "src/main.rs"

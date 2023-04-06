@@ -1,0 +1,25 @@
+# summarize-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: summarize
+  labels:
+    app: summarize
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: summarize
+  template:
+    metadata:
+      labels:
+        app: summarize
+    spec:
+      containers:
+      - name: summarize
+        image: 214569979525.dkr.ecr.us-east-1.amazonaws.com/summarize
+        ports:
+        - containerPort: 6060
+        env:
+        - name: RUST_LOG
+          value: info

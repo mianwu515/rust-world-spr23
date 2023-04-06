@@ -1,0 +1,14 @@
+# summarize-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: summarize
+  labels:
+    app: summarize
+spec:
+  ports:
+  - name: http
+    port: 60
+    targetPort: 6060
+  selector:
+    app: summarize
