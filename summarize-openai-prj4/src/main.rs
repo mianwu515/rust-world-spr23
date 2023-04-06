@@ -29,8 +29,7 @@ async fn index() -> impl Responder {
 
 #[post("/summarize")]
 async fn summarize(info: web::Json<SummaryRequest>) -> impl Responder {
-    let api_key = "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";
-    //env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY must be set");
+    let api_key = env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY must be set");
     let url = "https://api.openai.com/v1/engines/text-davinci-003/completions";
     let prompt = format!("Summarize this for a second-grade student:\n\n{}", info.text);
     let payload = json!({
@@ -50,15 +49,25 @@ async fn summarize(info: web::Json<SummaryRequest>) -> impl Responder {
         .send()
         .await;
 
-    match res {
-        Ok(r) => {
-            let result: Value = r.json().await.unwrap();
-            let summary = result["choices"][0]["text"].as_str().unwrap().to_owned();
-            let response = SummaryResponse { summary };
-            HttpResponse::Ok().json(response)
+        match res {
+            Ok(r) => {
+                match r.json::<serde_json::Value>().await {
+                    Ok(result) => {
+                        println!("Result JSON: {:?}", result);
+                        if let Some(summary) = result["choices"][0]["text"].as_str() {
+                            let summary = summary.to_owned();
+                            let response = SummaryResponse { summary };
+                            HttpResponse::Ok().json(response)
+                        } else {
+                            HttpResponse::InternalServerError().body("Error: Unable to retrieve summary")
+                        }
+                    }
+                    Err(e) => HttpResponse::InternalServerError().body(format!("Error parsing JSON: {:?}", e)),
+                }
+            }
+            Err(e) => HttpResponse::InternalServerError().body(format!("Error: {:?}", e)),
         }
-        Err(e) => HttpResponse::InternalServerError().body(format!("Error: {:?}", e)),
-    }
+        
 }
 
 #[actix_web::main]
@@ -71,7 +80,7 @@ async fn main() -> std::io::Result<()> {
             //.service(fs::Files::new("/", "./static").index_file("ui/index.html"))
             .service(Files::new("/static", "ui").index_file("index.html"))
     })
-    .bind("0.0.0.0:6060")?
+    .bind("0.0.0.0:8080")?
     .run()
     .await
 }
