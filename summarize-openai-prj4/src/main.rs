@@ -5,6 +5,9 @@ use reqwest::header;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use serde_json::json;
+use std::fs::File;
+use std::io::prelude::*;
+use actix_files::Files;
 
 #[derive(Debug, Serialize, Deserialize)]
 struct SummaryRequest {
@@ -18,12 +21,15 @@ struct SummaryResponse {
 
 #[get("/")]
 async fn index() -> impl Responder {
-    HttpResponse::Ok().body("Welcome to the summary service!")
+    let mut file = File::open("ui/index.html").unwrap();
+    let mut contents = String::new();
+    file.read_to_string(&mut contents).unwrap();
+    HttpResponse::Ok().content_type("text/html").body(contents)
 }
 
 #[post("/summarize")]
 async fn summarize(info: web::Json<SummaryRequest>) -> impl Responder {
-    let api_key = env::var("OPENAI_API_KEY").unwrap();
+    let api_key = env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY must be set");
     let url = "https://api.openai.com/v1/engines/text-davinci-003/completions";
     let prompt = format!("Summarize this for a second-grade student:\n\n{}", info.text);
     let payload = json!({
@@ -44,7 +50,7 @@ async fn summarize(info: web::Json<SummaryRequest>) -> impl Responder {
         .await;
 
     match res {
-        Ok(mut r) => {
+        Ok(r) => {
             let result: Value = r.json().await.unwrap();
             let summary = result["choices"][0]["text"].as_str().unwrap().to_owned();
             let response = SummaryResponse { summary };
@@ -61,8 +67,10 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .service(index)
             .service(summarize)
+            //.service(fs::Files::new("/", "./static").index_file("ui/index.html"))
+            .service(Files::new("/static", "ui").index_file("index.html"))
     })
-    .bind("127.0.0.1:8080")?
+    .bind("0.0.0.0:8080")?
     .run()
     .await
 }
