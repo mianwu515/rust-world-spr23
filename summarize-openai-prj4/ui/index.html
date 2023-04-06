@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Summary Service</title>
+       <style>
+      form {
+        margin: 20px auto;
+        max-width: 1000px;
+        padding: 20px;
+        background-color: #f7f7f7;
+        border-radius: 5px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      textarea {
+        width: 100%;
+        height: 200px;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+      }
+
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+      }
+
+      #summary-output {
+        margin: 10px auto;
+        max-width: 1000px;
+        padding: 10px;
+        background-color: #f7f7f7;
+        border-radius: 5px;
+        font-size: 18px;
+        line-height: 1.5;
+      }
+    </style>
+
+  </head>
+  <body>
+    <h1>Summary Service</h1>
+    <form id="summary-form">
+      <label for="text-input">Enter text:</label><br>
+      <textarea id="text-input" name="text"></textarea>
+      <input type="submit" value="Summarize">
+    </form>
+    <div id="summary-output"></div>
+
+    <script>
+      const form = document.getElementById('summary-form');
+      const output = document.getElementById('summary-output');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const response = await fetch('/summarize', {
+          method: 'POST',
+          body: JSON.stringify({
+            text: formData.get('text')
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await response.json();
+        output.innerText = data.summary;
+      });
+    </script>
+  </body>
+</html>
+

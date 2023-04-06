@@ -40,3 +40,5 @@ aws/
 .aws/
 
 */bootstrap
+
+.DS_Store
