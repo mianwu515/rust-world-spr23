@@ -1,4 +1,4 @@
 
 
 build:
-	docker build -t summarize-openai .
+	docker build -t summarize .
