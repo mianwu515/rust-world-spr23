@@ -1,5 +1,7 @@
 # A Rust Summarize Service with OpenAI API 
 
+The service has been deployed to duke virtual machine. Access it from [here](http://vcm-30756.vm.duke.edu:8989/)!
+
 ![UI](summarize.png)
 
 ### Usage
