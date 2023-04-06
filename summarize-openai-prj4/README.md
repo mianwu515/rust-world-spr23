@@ -41,7 +41,7 @@ cargo run
 
 To run a program with the command `cargo run` in a Linux virtual machine through the macOS Terminal, expose it to the machine's 0.0.0.0:8080 port, and leave the terminal without affecting the running program, follow these steps:
 
-- Reserver from [here](https://vcm.duke.edu)
+- Reserve a Duke VM from [here](https://vcm.duke.edu)
 - `ssh user@ip_address`
 - install screen CLI: `sudo apt-get update && sudo apt-get install screen`
 - start a new screen session: `screen -S mysession`
