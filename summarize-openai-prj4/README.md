@@ -77,3 +77,4 @@ To run a program with the command `cargo run` in a Linux virtual machine through
 ### References
 - [OpenAI-examples](https://platform.openai.com/examples)
 - [OpenAI-Summarize-playground](https://platform.openai.com/playground/p/default-summarize?model=text-davinci-003)
+- [Keep-remote-ssh-sessions-running-after-disconnection](https://www.tecmint.com/keep-remote-ssh-sessions-running-after-disconnection/)
