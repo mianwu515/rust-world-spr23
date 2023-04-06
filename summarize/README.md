@@ -34,20 +34,20 @@ cargo run
 ### Appendix - troubleshoots of the deployment on a Linux machine
 - "error: failed to run custom build command for `openssl-sys v0.9.84`"
     - run `sudo apt-get update`
-    - `sudo apt-get install pkg-config libssl-dev`
-    - `export OPENSSL_DIR=/usr/local/ssl`
+    - run `sudo apt-get install pkg-config libssl-dev`
+    - run `export OPENSSL_DIR=/usr/local/ssl`
 
 - If it still occurs
-    - `find / -type d -name "openssl" 2>/dev/null`
+    - run `find / -type d -name "openssl" 2>/dev/null`
     - Output:
         - ```bash
-        - > /usr/include/x86_64-linux-gnu/openssl
+        -  /usr/include/x86_64-linux-gnu/openssl
         - > /usr/include/openssl
         - > /usr/lib/python3/dist-packages/cryptography/hazmat/backends/openssl
         - > /usr/lib/python3/dist-packages/cryptography/hazmat/bindings/openssl
         - > /usr/share/doc/openssl
         - ``` 
-    - `export OPENSSL_INCLUDE_DIR=/usr/include/openssl`
-    - `export OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu`
-    - `export OPENSSL_DIR=/usr`
+    - run `export OPENSSL_INCLUDE_DIR=/usr/include/openssl`
+    - run `export OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu`
+    - run `export OPENSSL_DIR=/usr`
     - now re-run `cargo run`
