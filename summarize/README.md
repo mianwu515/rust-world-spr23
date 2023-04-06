@@ -18,7 +18,7 @@ cargo run
 ```
 - Launch http://127.0.0.1:8080 in the browser
 
-- Create a Dockerfile and deploy the service to AWS APP Runner. See [here](https://github.com/nogibjj/rust-world-spr23/tree/main/actix-containerized-microservice-wk3/actixdocker#this-is-to-build-an-image-out-of-the-dockerfile).
+- Create a Dockerfile and deploy the service to AWS APP Runner. See instructions from [here](https://github.com/nogibjj/rust-world-spr23/tree/main/actix-containerized-microservice-wk3/actixdocker#this-is-to-build-an-image-out-of-the-dockerfile).
     - `docker build --no-cache --build-arg OPENAI_API_KEY="xxx" -t summarize .`
 ### References
 - [OpenAI-examples](https://platform.openai.com/examples)
