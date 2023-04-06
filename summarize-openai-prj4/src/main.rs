@@ -49,15 +49,25 @@ async fn summarize(info: web::Json<SummaryRequest>) -> impl Responder {
         .send()
         .await;
 
-    match res {
-        Ok(r) => {
-            let result: Value = r.json().await.unwrap();
-            let summary = result["choices"][0]["text"].as_str().unwrap().to_owned();
-            let response = SummaryResponse { summary };
-            HttpResponse::Ok().json(response)
+        match res {
+            Ok(r) => {
+                match r.json::<serde_json::Value>().await {
+                    Ok(result) => {
+                        println!("Result JSON: {:?}", result);
+                        if let Some(summary) = result["choices"][0]["text"].as_str() {
+                            let summary = summary.to_owned();
+                            let response = SummaryResponse { summary };
+                            HttpResponse::Ok().json(response)
+                        } else {
+                            HttpResponse::InternalServerError().body("Error: Unable to retrieve summary")
+                        }
+                    }
+                    Err(e) => HttpResponse::InternalServerError().body(format!("Error parsing JSON: {:?}", e)),
+                }
+            }
+            Err(e) => HttpResponse::InternalServerError().body(format!("Error: {:?}", e)),
         }
-        Err(e) => HttpResponse::InternalServerError().body(format!("Error: {:?}", e)),
-    }
+        
 }
 
 #[actix_web::main]
