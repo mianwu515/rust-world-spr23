@@ -29,7 +29,8 @@ async fn index() -> impl Responder {
 
 #[post("/summarize")]
 async fn summarize(info: web::Json<SummaryRequest>) -> impl Responder {
-    let api_key = env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY must be set");
+    let api_key = "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";
+    //env::var("OPENAI_API_KEY").expect("OPENAI_API_KEY must be set");
     let url = "https://api.openai.com/v1/engines/text-davinci-003/completions";
     let prompt = format!("Summarize this for a second-grade student:\n\n{}", info.text);
     let payload = json!({
@@ -70,7 +71,7 @@ async fn main() -> std::io::Result<()> {
             //.service(fs::Files::new("/", "./static").index_file("ui/index.html"))
             .service(Files::new("/static", "ui").index_file("index.html"))
     })
-    .bind("0.0.0.0:8080")?
+    .bind("0.0.0.0:6060")?
     .run()
     .await
 }
