@@ -28,18 +28,18 @@ cargo run
 - [OpenAI-Summarize-playground](https://platform.openai.com/playground/p/default-summarize?model=text-davinci-003)
 
 
+### Useful tips
+- Check whether a port has been used: `sudo lsof -i :9898 -sTCP:LISTEN`
+- 
 ### Appendix - troubleshoots of the deployment on a Linux machine
-- check whether a port has been used: `sudo lsof -i :9898 -sTCP:LISTEN`
-
 - "error: failed to run custom build command for `openssl-sys v0.9.84`"
     - run `sudo apt-get update`
     - `sudo apt-get install pkg-config libssl-dev`
     - `export OPENSSL_DIR=/usr/local/ssl`
 
-- find / -type d -name "openssl" 2>/dev/null
-
--- Output:
-
+- If it still occurs
+    - `find / -type d -name "openssl" 2>/dev/null`
+    - Output:
 ```bash
 > /usr/include/x86_64-linux-gnu/openssl
 > /usr/include/openssl
@@ -47,12 +47,7 @@ cargo run
 > /usr/lib/python3/dist-packages/cryptography/hazmat/bindings/openssl
 > /usr/share/doc/openssl
 ```
-
--- Run
-```bash
-$ export OPENSSL_INCLUDE_DIR=/usr/include/openssl
-export OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu
-export OPENSSL_DIR=/usr
-```
-
--- Re-run `cargo run`
+    - `export OPENSSL_INCLUDE_DIR=/usr/include/openssl`
+    - `export OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu`
+    - `export OPENSSL_DIR=/usr`
+    - now re-run `cargo run`
