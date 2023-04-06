@@ -1,5 +1,7 @@
 # A Rust Summarize Service with OpenAI API 
 
+![UI](summarize.png)
+
 ### Usage
 - Get your development API Key from [here](https://platform.openai.com/account/api-keys)
 
