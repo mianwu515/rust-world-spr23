@@ -40,13 +40,11 @@ cargo run
 - If it still occurs
     - run `find / -type d -name "openssl" 2>/dev/null`
     - Output:
-        - ```bash
-        -  /usr/include/x86_64-linux-gnu/openssl
+        - > /usr/include/x86_64-linux-gnu/openssl
         - > /usr/include/openssl
         - > /usr/lib/python3/dist-packages/cryptography/hazmat/backends/openssl
         - > /usr/lib/python3/dist-packages/cryptography/hazmat/bindings/openssl
         - > /usr/share/doc/openssl
-        - ``` 
     - run `export OPENSSL_INCLUDE_DIR=/usr/include/openssl`
     - run `export OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu`
     - run `export OPENSSL_DIR=/usr`
