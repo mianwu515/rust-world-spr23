@@ -26,16 +26,18 @@ cargo run
 ```
 - Launch http://127.0.0.1:8080 in the browser
 
-### Containerize
-- Create a Dockerfile and deploy the service to AWS APP Runner. See instructions from [here](https://github.com/nogibjj/rust-world-spr23/tree/main/actix-containerized-microservice-wk3/actixdocker#this-is-to-build-an-image-out-of-the-dockerfile).
-    - Build container out of the Docker image: run `make build --build-arg OPENAI_API_KEY="xxx"`
-    - Clean build: `docker build --no-cache --build-arg OPENAI_API_KEY="xxx" -t summarize .` or run `make build-no-cache --build-arg OPENAI_API_KEY="xxx"`
+### 3 Ways to deploy this service 
+#### 1. Kubernetes
+- You could make use the 2 yaml files provided in this directory
 
-### References
-- [OpenAI-examples](https://platform.openai.com/examples)
-- [OpenAI-Summarize-playground](https://platform.openai.com/playground/p/default-summarize?model=text-davinci-003)
+#### 2. AWS App Runner
+- Containerize: follow the instructions from [here](https://github.com/nogibjj/rust-world-spr23/tree/main/actix-containerized-microservice-wk3/actixdocker#this-is-to-build-an-image-out-of-the-dockerfile).
+- Pay attention to the port in the program and in the setting of the App Runner
+- Build container out of the Docker image: run `make build --build-arg OPENAI_API_KEY="xxx"`
+- Clean build: `docker build --no-cache --build-arg OPENAI_API_KEY="xxx" -t summarize .` or run `make build-no-cache --build-arg OPENAI_API_KEY="xxx"`
 
-### Use "screen" CLI to leave the program running on the virtual machine
+#### 3. Virtual Machine
+##### Use "screen" CLI to leave the program running on the virtual machine
 
 To run a program with the command `cargo run` in a Linux virtual machine through the macOS Terminal, expose it to the machine's 0.0.0.0:8080 port, and leave the terminal without affecting the running program, follow these steps:
 
@@ -71,3 +73,7 @@ To run a program with the command `cargo run` in a Linux virtual machine through
     - run `export OPENSSL_LIB_DIR=/usr/lib/x86_64-linux-gnu`
     - run `export OPENSSL_DIR=/usr`
     - now re-run `cargo run`
+
+### References
+- [OpenAI-examples](https://platform.openai.com/examples)
+- [OpenAI-Summarize-playground](https://platform.openai.com/playground/p/default-summarize?model=text-davinci-003)
