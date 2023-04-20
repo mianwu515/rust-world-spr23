@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>AI Services</title>
+        <style>
+          /* Existing CSS styles */
+          form {
+        margin: 20px auto;
+        max-width: 1000px;
+        padding: 20px;
+        background-color: #f7f7f7;
+        border-radius: 5px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      textarea {
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+      }
+
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+      }
+
+      #image-output {
+        margin: 10px auto;
+        max-width: 1000px;
+        padding: 10px;
+        text-align: center;
+      }
+
+          /* Add styles for the tabs */
+          .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+          }
+    
+          .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+          }
+    
+          .tab button:hover {
+            background-color: #ddd;
+          }
+    
+          .tab button.active {
+            background-color: #ccc;
+          }
+    
+          .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+          }
+        </style>
+      </head>
+ 
+      <body>
+        <h1>AI Services</h1>
+        <div class="tab">
+          <button class="tablinks" id="image-tab">Image Generation</button>
+          <button class="tablinks" id="summary-tab">Summarization</button>
+          <button class="tablinks" id="keywords-tab">Keywords</button>
+        </div>
+  
+        <div id="image-page" class="tabcontent">
+          <!-- Existing form and output for image generation -->
+          <h1>Image Generation Service</h1>
+          <form id="image-form">
+            <label for="prompt-input">Enter prompt:</label><br>
+            <input type="text" id="prompt-input" name="prompt"><br>
+            <input type="submit" value="Generate Image">
+          </form>
+          <div id="image-output"></div>
+        </div>
+    
+        <div id="summary-page" class="tabcontent">
+          <!-- Add the summarization form -->
+          <h1>Summary Service</h1>
+          <form id="summary-form">
+            <label for="text-input">Enter text:</label><br>
+            <textarea id="text-input" name="text"></textarea>
+            <input type="submit" value="Summarize">
+          </form>
+          <div id="summary-output"></div>
+        </div>
+
+        <div id="keywords-page" class="tabcontent">
+          <h1>Keywords Service</h1>
+          <form id="keywords-form">
+            <label for="text-input">Enter text:</label><br>
+            <textarea id="text-input" name="text"></textarea>
+            <input type="submit" value="Keywords">
+          </form>
+          <div id="keywords-output"></div>
+        </div>
+    
+        <script>
+          // Existing event listener for image-form
+          const imageForm = document.getElementById('image-form');
+          const imageOutput = document.getElementById('image-output');
+    
+          imageForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const response = await fetch('/generate-image', {
+              method: 'POST',
+              body: JSON.stringify({
+                prompt: formData.get('prompt')
+              }),
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+            const data = await response.json();
+            imageOutput.innerHTML = `<img src="${data.image_url}" alt="Generated image">`;
+          });
+    
+          // Add event listener for summary-form
+          const summaryForm = document.getElementById('summary-form');
+          const summaryOutput = document.getElementById('summary-output');
+    
+          summaryForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const response = await fetch('/summarize', {
+              method: 'POST',
+              body: JSON.stringify({
+                text: formData.get('text')
+              }),
+              headers: {
+                'Content-Type': 'application/json'
+          }
+        });
+        const data = await response.json();
+        summaryOutput.innerText = data.summary;
+      });
+
+      // Add event listener for keywords-form
+      const keywordsForm = document.getElementById('keywords-form');
+      const keywordsOutput = document.getElementById('keywords-output');
+
+      keywordsForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const response = await fetch('/extract-keywords', {
+          method: 'POST',
+          body: JSON.stringify({
+            text: formData.get('text')
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const data = await response.json();
+        keywordsOutput.innerText = data.keywords;
+      });
+
+
+      // Open tab function
+      function openTab(evt, tabId) {
+        const tabcontent = document.getElementsByClassName("tabcontent");
+        for (let i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+
+        const tablinks = document.getElementsByClassName("tablinks");
+        for (let i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        document.getElementById(tabId).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+
+      // Initialize tabs
+      document.getElementById('image-tab').addEventListener('click', (event) => openTab(event, 'image-page'));
+      document.getElementById('summary-tab').addEventListener('click', (event) => openTab(event, 'summary-page'));
+      document.getElementById('keywords-tab').addEventListener('click', (event) => openTab(event, 'keywords-page'));
+      document.getElementById('image-tab').click(); // Set the first tab as active by default
+
+    </script>
+  </body>
+</html>
+
+  
