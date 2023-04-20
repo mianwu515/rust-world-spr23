@@ -37,3 +37,4 @@ all: format lint test
 clean:
 	find . -name \*~ -type f -delete
 	find . -name \*.icloud -type f -delete
+	find . -type d -name target -exec rm -rf {} +
